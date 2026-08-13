@@ -4,16 +4,20 @@
 
 ---
 
-## Grupo:
+## Grupo: ClickByte
 
 ### Integrantes:
-* Ejemplo
+* PRIETO QUIROZ, FRANCO MANUEL 46450221
+* ARIAS, VALENTIN 45734482
+* TOSOLINI, FRANCO ALBERTO 45702152
+* BOYÉ, FACUNDO 46070306
+* SCAGLIOTTI, MARCO 46070301
+* FRENGUELLI, GUILLERMINA 45154313
+* BARBERO, GIOVANNA LUZ 46509956
+* VON BÜREN, THOMAS 43136697
 
 ---
 
 ## Herramientas Utilizadas
 
-* **Lenguaje:** Python 3.11 / JavaScript / Go
-* **Framework:** React / FastAPI / Django
-* **Base de datos:** PostgreSQL / MongoDB
-* **Otras herramientas:** Docker, Tailwind CSS
+* **Framework:** Cisco Packet Tracer
