@@ -19,7 +19,7 @@
 
 **Profesor:** Ingeniero Santiago Henn
 **Comisión:** ICOMP24-03
-**Año:** 2026
+**Año:** 20265
 
 ---
 
@@ -39,24 +39,28 @@
 
 ## 3)
 
-!![PACKET SENDER PRIMERA INSTANCIA - PAYLOAD RECIBIDO](./img/3A.png) 
-*Figura 1: PACKET SENDER PRIMERA INSTANCIA - PAYLOAD RECIBIDO.*
 
-&nbsp;&nbsp;&nbsp;&nbsp;En la imagen podemos ver la conexión correcta con el servidor remoto y la subsecuente comunicación con el mismo. El payload recibido en respuesta de “clickbyte” resulto en “ww”. En las siguientes imágenes tenemos la comunicación capturada mediante Wireshark.
+![Texto alternativo](./3A.png) 
+*Figura 1: Packet Sender primera instancia. Payload recibido.*
+![Texto alternativo](./3B.png) 
+*Figura 2: Packet Sender 2da instancia. Payloads enviados mas intentos.*
 
-![PACKET SENDER 2DA INSTANCIA - PAYLOADS ENVIADOS + INTENTOS](./img/3B.png) 
-*Figura 2: PACKET SENDER 2DA INSTANCIA - PAYLOADS ENVIADOS + INTENTOS.*
-
-![WIRESHARK - SNIFFANDO](./img/3C.png) 
-*Figura 3: WIRESHARK - SNIFFANDO.*
+![Texto alternativo](./3C.png) 
+*Figura 3: Wireshark sniffando.*
 
 **d)
 
-![DESGLOSE DEL PAQUETE Y CARGA ÚTIL](./img/3D.png) 
-*Figura 4: DESGLOSE DEL PAQUETE Y CARGA ÚTIL.*
+![Texto alternativo](./3D.png) 
+![Texto alternativo](./3E.png) 
+*Figura 4, 5: Desglose del paquete y carga util.*
 
-![FINALIZACIÓN Y OBSERVACIÓN DEL FOUR WAY HANDSHAKE (LÍNEAS 6 A 9)](./img/3E.png) 
-*Figura 5: FINALIZACIÓN Y OBSERVACIÓN DEL FOUR WAY HANDSHAKE (LÍNEAS 6 A 9).*
+
+
+
+
+
+
+
 
 **f) ¿Qué conclusión podemos sacar de que sea tan fácil ver un paquete que viaja a través de la red?**
 
@@ -64,21 +68,15 @@
 
 ---
 
-## 4) Capturas e Interpretación del Tráfico de Red
+## 4)
 
-![PACKET SENDER PRIMERA INSTANCIA - PAYLOAD RECIBIDO](./img/01_packet_sender_recibido.png) 
-*Figura 1: PACKET SENDER PRIMERA INSTANCIA - PAYLOAD RECIBIDO.*
+![Texto alternativo](./4FotoA.png) 
+*Figura 1: Packet Sender conectado.*
 
-&nbsp;&nbsp;&nbsp;&nbsp;En la imagen podemos ver la conexión correcta con el servidor remoto y la subsecuente comunicación con el mismo. El payload recibido en respuesta resultó en la carga útil procesada. En las siguientes imágenes tenemos la comunicación capturada mediante Wireshark.
+&nbsp;&nbsp;&nbsp;&nbsp;En la imagen podemos ver la conexión correcta con el servidor remoto y la subsecuente comunicación con el mismo. El payload recibido en respuesta de “clickbyte” resulto en “ww”. En las siguientes imágenes tenemos la comunicación capturada mediante Wireshark.
 
-![PACKET SENDER 2DA INSTANCIA - PAYLOADS ENVIADOS + INTENTOS](./img/02_packet_sender_enviados.png) 
-*Figura 2: PACKET SENDER 2DA INSTANCIA - PAYLOADS ENVIADOS + INTENTOS.*
+![Texto alternativo](./4FotoB.png) 
+*Figura 2: Paquetes enviados.*
 
-![WIRESHARK - SNIFFANDO](./img/03_wireshark_sniffando.png) 
-*Figura 3: WIRESHARK - SNIFFANDO.*
-
-![DESGLOSE DEL PAQUETE Y CARGA ÚTIL](./img/04_desglose_paquete.png) 
-*Figura 4: DESGLOSE DEL PAQUETE Y CARGA ÚTIL.*
-
-![FINALIZACIÓN Y OBSERVACIÓN DEL FOUR WAY HANDSHAKE (LÍNEAS 6 A 9)](./img/05_four_way_handshake.png) 
-*Figura 5: FINALIZACIÓN Y OBSERVACIÓN DEL FOUR WAY HANDSHAKE (LÍNEAS 6 A 9).*
+![Texto alternativo](./4FotoC.png) 
+*Figura 3: Paquetes recibidos.*
