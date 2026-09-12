@@ -30,6 +30,41 @@
 ![Texto alternativo](./foto.jpg) 
 *Figura 1: Leyenda de Imagen.*
 
+
+---
+**c) ¿Qué es una trama Ethernet? Identificar sus principales campos y explicar brevemente para qué
+sirve cada uno.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Una trama Ethernet es la unidad básica de datos de la capa de enlace de modelo OSI que se utiliza para transportar información entre dispositivos en una red de área local (LAN).
+
+&nbsp;&nbsp;&nbsp;&nbsp;Entendiendo a campos como una subdivisión o sección delimitada de bytes dentro del formato de una unidad de datos, sus principales campos de uso son:
+
+1) Preámbulo y Delimitador de inicio de trama (SFD): Consta de 8 bytes totales, donde 7 pertenecen al preámbulo, los cuales permiten que el receptor sincronice su reloj con el del emisor antes de procesar el resto de datos, y el byte restante pertenece al delimitador de inicio de trama, este indica el inicio real de la trama e indica al que recibe el primer bit de la cabecera.
+
+2) Dirección MAC de destino: 6 bytes que especifican la dirección fisica o de acceso a la interfaz de red de receptora. La dirección física puede ser unicast, multicast o broadcast.
+
+3) Dirección MAC de origen: 6 bytes que especifican la dirección física de la interfaz de red emisora de la trama .
+ 
+4) Tipo/Longitud: 2 bytes que indican el protocolo de capa superior encapsulado en el formato Ethernet II o la longitud de datos de LLC en el formato IEEE 802.3.
+
+5) Datos y Relleno: Los datos contienen la unidad de datos del protocolo de capas superiores y el relleno añaden bytes adicionales si es que se da que los datos anteriores son muy cortos, esto esta hecho para garantizar que la trama alcance la longitud minima que se necesita por el estándar.
+
+6) Secuencia de Verificación de Trama (FCS): Son 4 bytes que contienen un código de redundancia cíclica (CRC) para detectar errores de transmisión.
+
+
+**d) ¿Qué información permite determinar qué protocolo de capa superior está transportando una trama Ethernet?**
+
+&nbsp;&nbsp;&nbsp;&nbsp; La información que nos permite determinar el protocolo que se está transportando se encuentra en el campo longitud/tipo de la cabecera MAC de la trama. Puede ser en el formato Ethernet II  o en formato IEEE 802.3.
+* En el formato Ethernet II el campo de 2 bytes actúa como un campo de Tipo, dentro de ese campo hay códigos numéricos en formato hexadecimal que identifica al protocolo, estos son:
+    1) 0x0800: Indica que el paquete que se está transportando es IPv4.
+    2) 0x0806: Indica que la trama transporta un paquete ARP (Address Resolution Protocol).
+    3) 0x86DD: Indica que el paquete que se está transportando es IPv6.
+
+* En el formato IEEE 802.3 el campo de 2 bytes indica la longitud en bytes del campo de datos. Para identificar el protocolo que se transporta la capa ethernet examina la cabecera LLC que va después del encabezado MAC.
+
+    &nbsp;&nbsp;&nbsp;&nbsp; 
+    Dentro de la cabecera LLC se incluye el campo llamado DSAP (Destination Service Access Point), cuyo valor le indica a la interfaz de red a qué módulo o protocolo de la capa superior debe entregarle la información recibida.
+
 ---
 
 ## 2)
