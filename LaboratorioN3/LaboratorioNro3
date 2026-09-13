@@ -79,9 +79,74 @@ c) No representan lo mismo porque resuelven problemas en capas distintas. La dir
 
 d) En la cabecera Ethernet II, el campo EtherType presenta el valor 0x0800. Esto indica que el protocolo de capa superior encapsulado dentro de la carga útil de la trama es IPv4, funcionando dicho campo como mecanismo de desmultiplexación hacia la Capa 3.
 
+
 ---
 
 ## 3)
+**a) ¿Qué problema(s) resuelve TCP que no resuelve directamente Ethernet ni IP?**
+&nbsp;&nbsp;&nbsp;&nbsp; Tanto ethernet como ip proporcionan un servicio que se encarga de enrutar y mover paquetes de un nodo a otro. Sin embargo no garantiza el orden de los paquetes ni tampoco que lleguen bien. Luego la capa TCP se encarga de proporcionar las siguientes soluciones: 
+* Confiabilidad/control de perdidas: TCP detecta paquetes perdidos mediante confirmaciones (ACKs) y temporizadores, y luego realiza transmiciones de los datos faltantes.
+* Entrega en orden: TCP asigna números de secuencia a los datos para que el receptor pueda reordenar los segmentos correctamente antes de entregarlos a la capa de aplicación.
+* Control de flujo: Evita que el emisor envie datos de forma mucho mas rapida de lo que puede recibir el receptor, mediante TCP Windows 
+* Control de congestión: Ajusta la tasa de transmision para evitar el sobrecargamiento en los routers intermedios. 
+* Direccionamiento de aplicaciones: TCP permite que varias aplicaciones utilicen la red simultaneamente sin interferir en otras aplicaciones. Esto lo logra mediante los numeros de puerto tanto de origen como de destino
+* Estado: Permite establecer una conexion confiable entre el emisor y el receptor antes de transmitir datos. Ademas la finaliza al terminar
+
+**b) Investigar los campos más importantes de la metadata en un frame TCP. ¿Para qué sirve cada
+uno?**
+
+**1. Puertos de Red**
+
+* **Puerto de Origen (*Source Port*)** — 16 bits: 
+Identifica la aplicación o proceso emisor en el host de origen. 
+
+
+* **Puerto de Destino (*Destination Port*)** — 16 bits: 
+ Identifica la aplicación o servicio específico al que va dirigida la información en el host receptor.
+
+**2. Control de Secuencia y Confirmación**
+
+* **Número de Secuencia (*Sequence Number*)** — 32 bits: 
+Indica la posición del primer byte de datos de este segmento dentro del flujo global de bytes transmitidos en la sesión. Lo que permite al receptor reordenar los paquetes que llegan fuera de secuencia y detectar datos duplicados o faltantes.
+
+* **Número de ACK / Confirmación (*Acknowledgment Number*)** — 32 bits: Contiene el número del próximo byte que el receptor espera recibir.
+  Sirve como una confirmación de que todos los bytes anteriores a ese número han sido recibidos correctamente.
+
+**3. Control de Longitud y Estado**
+
+* **Longitud de Cabecera / Offset de Datos (*Data Offset*)** — 4 bits: Indica el tamaño total de la cabecera TCP medido en palabras de 32 bits (4 bytes). Permite determinar exactamente dónde termina la cabecera e inicia el campo de datos 
+
+* **Reservado (*Reserved*)** — 6 bits: Bits reservados para uso futuro. Debe ser enviado en cero (`0`).
+
+
+
+**4. Banderas de Control (*Flags*) — 6 bits (1 bit c/u)**
+
+Las banderas controlan el estado de la conexión TCP y gestionan la transmisión:
+
+| Flag | Nombre Completo | Descripción y Uso Principal |
+| :--- | :--- | :--- |
+| **SYN** | *Synchronize* | Inicia la conexión y sincroniza los números de secuencia iniciales durante el *handshake* de 3 vías. |
+| **ACK** | *Acknowledgment* | Indica que el campo *Número de ACK* contiene información válida. |
+| **FIN** | *Finish* | Solicita la finalización ordenada de la conexión. |
+| **RST** | *Reset* | ABORTA o reinicia de forma inmediata la conexión debido a un error crítico o un paquete inesperado. |
+| **PSH** | *Push* | Solicita que el receptor entregue los datos inmediatamente a la capa de aplicación sin esperar a llenar el búfer. |
+| **URG** | *Urgent* | Señala que el segmento contiene información prioritaria que debe ser procesada con urgencia. |
+
+
+
+**5. Control de Flujo y Error**
+
+* **Ventana de Recepción (*Window Size*)** — 16 bits:: Especifica la cantidad de bytes que el receptor está dispuesto a recibir en su búfer en ese instante. Evitando que un emisor rápido sobrecargue la capacidad de almacenamiento del receptor.
+
+* **Suma de Verificación (*Checksum*)** — 16 bits: Campo de verificación de integridad de datos. Se calcula sobre la cabecera TCP, la información de la pseudo-cabecera IP y los datos de aplicación. Si el cálculo en el destino no coincide, el segmento se descarta por estar corrupto.
+
+
+**6. Información Adicional**
+
+* **Puntero Urgente (*Urgent Pointer*)** — 16 bits: Indica el offset donde terminan los datos urgentes dentro del segmento. Solo es válido si la bandera **URG** está activada.
+
+* **Opciones y Relleno (*Options & Padding*)** — Variable (0 a 320 bits): Los bits de opciones permiten añadir capacidades adicionales como negociación del *MSS* (Maximum Segment Size), *Timestamps* o escalado de ventana. Luego el relleno añade ceros para garantizar que la cabecera sea siempre un múltiplo exacto de 32 bits.
 **c) Explicar el Three-way y Four-way handshake en TCP.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;El **Three-way handshake** es el procedimiento que utiliza TCP para establecer una conexión entre dos extremos antes de comenzar a intercambiar datos. Está compuesto por tres pasos:
