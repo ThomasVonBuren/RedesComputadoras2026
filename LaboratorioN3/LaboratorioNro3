@@ -69,6 +69,11 @@ sirve cada uno.**
 
 ## 2)
 
+
+
+---
+
+## 3)
 **a) ¿Qué problema(s) resuelve TCP que no resuelve directamente Ethernet ni IP?**
 &nbsp;&nbsp;&nbsp;&nbsp; Tanto ethernet como ip proporcionan un servicio que se encarga de enrutar y mover paquetes de un nodo a otro. Sin embargo no garantiza el orden de los paquetes ni tampoco que lleguen bien. Luego la capa TCP se encarga de proporcionar las siguientes soluciones: 
 * Confiabilidad/control de perdidas: TCP detecta paquetes perdidos mediante confirmaciones (ACKs) y temporizadores, y luego realiza transmiciones de los datos faltantes.
@@ -133,10 +138,6 @@ Las banderas controlan el estado de la conexión TCP y gestionan la transmisión
 * **Puntero Urgente (*Urgent Pointer*)** — 16 bits: Indica el offset donde terminan los datos urgentes dentro del segmento. Solo es válido si la bandera **URG** está activada.
 
 * **Opciones y Relleno (*Options & Padding*)** — Variable (0 a 320 bits): Los bits de opciones permiten añadir capacidades adicionales como negociación del *MSS* (Maximum Segment Size), *Timestamps* o escalado de ventana. Luego el relleno añade ceros para garantizar que la cabecera sea siempre un múltiplo exacto de 32 bits.
-
----
-
-## 3)
 
 **f) ¿Qué conclusión podemos sacar de que sea tan fácil ver un paquete que viaja a través de la red?**
 
