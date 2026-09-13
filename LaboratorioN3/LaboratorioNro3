@@ -29,6 +29,9 @@
 ¿Qué función cumple la capa de enlace dentro del modelo OSI? ¿Qué tipo de comunicación resuelve? 
 Esta es la capa que va dentre la física y la de red, se encarga de tomar lo que le pasa a la capa de red y armar las tramas o frames para mandarlas por el medio físico, como lo hace, le pone a cada trama la dirección de origen y destino, las MAC, para que no se pisen las transmisiones controlando el medio y a través del uso de un CRC (campo de control de errores) se fija si la trama llegó bien, esa es su función. Resuelve el tipo de comunicación dentro de la red local, entre los dispositivos que estan conectados al mismo medio, entonces resuelve que un dato llegue de un dispositivo a otro que esta en la red sin necesidad de rutear. 
 
+b) ¿Qué es una dirección MAC? ¿En qué se diferencia de una dirección IP? 
+La dirección MAC una dirección física y solo sirve dentro de la red local es decir  cuando el paquete pasa por un router para ir a otra red, la MAC ya no viaja con él,  es la que trae grabada de fábrica la placa de red del dispositivo (48 bits en hexadecimal )
+La IP es una dirección lógica, no viene de fábrica sino que se asigna y se puede cambiar, sirve para identificar un dispositivo en cualquier lugar de la red, no solo en la local y permite el ruteo entre redes distintas, tiene 32 bits en IPv4 o 128 en IPv6  esta se organiza una parte de red y una parte de host, para que los routers sepan hacia dónde mandar el paquete. La diferencia es la MAC dice qué dispositivo es dentro de la red local osea capa 2 fisica, pero la IP dice donde esta ese dispositivo dentro de toda la red capa 3 lógica y puede cambiar 
 
 
 ---
