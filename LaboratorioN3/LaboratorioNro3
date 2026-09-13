@@ -69,6 +69,15 @@ sirve cada uno.**
 
 ## 2)
 
+![Captura wireshark](wireshark.png)
+
+a) La dirección MAC de origen es f8:54:f6:7a:97:0a y corresponde a la interfaz de red (placa Wi-Fi) de mi propia notebook, porque es el hardware físico que generó y transmitió la trama en el enlace local. La dirección MAC de destino es 78:4f:24:3b:73:a0 y corresponde a la interfaz LAN de mi router (default gateway), porque al estar el servidor de destino fuera de mi red local, mi equipo no puede entregarle la trama directamente y debe enviársela al enrutador.
+
+b) La dirección IP de origen es 192.168.1.7 y corresponde a la dirección lógica privada asignada a mi computadora dentro de mi subred local. La dirección IP de destino es 54.240.184.81 y corresponde a la dirección pública enrutable del servidor remoto en Internet con el cual se estableció la sesión TCP. 
+
+c) No representan lo mismo porque resuelven problemas en capas distintas. La dirección MAC opera en la Capa 2 (enlace de datos) y es un identificador físico de 48 bits fijado por el fabricante que solo tiene validez dentro de mi red local; sirve para que mi computadora y el router se comuniquen de forma directa en el mismo medio físico. En cambio, la dirección IP pertenece a la Capa 3 (red) y es un identificador lógico y jerárquico que permite encaminar los paquetes a través de Internet de extremo a extremo, manteniéndose invariable desde mi máquina hasta el servidor final sin importar cuántos nodos intermedios atraviese.
+
+d) En la cabecera Ethernet II, el campo EtherType presenta el valor 0x0800. Esto indica que el protocolo de capa superior encapsulado dentro de la carga útil de la trama es IPv4, funcionando dicho campo como mecanismo de desmultiplexación hacia la Capa 3.
 
 
 ---
@@ -138,6 +147,20 @@ Las banderas controlan el estado de la conexión TCP y gestionan la transmisión
 * **Puntero Urgente (*Urgent Pointer*)** — 16 bits: Indica el offset donde terminan los datos urgentes dentro del segmento. Solo es válido si la bandera **URG** está activada.
 
 * **Opciones y Relleno (*Options & Padding*)** — Variable (0 a 320 bits): Los bits de opciones permiten añadir capacidades adicionales como negociación del *MSS* (Maximum Segment Size), *Timestamps* o escalado de ventana. Luego el relleno añade ceros para garantizar que la cabecera sea siempre un múltiplo exacto de 32 bits.
+**c) Explicar el Three-way y Four-way handshake en TCP.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;El **Three-way handshake** es el procedimiento que utiliza TCP para establecer una conexión entre dos extremos antes de comenzar a intercambiar datos. Está compuesto por tres pasos:
+
+1. El cliente envía un segmento con el flag **SYN** para solicitar el establecimiento de la conexión.
+2. El servidor responde con un segmento **SYN + ACK**, aceptando la conexión y confirmando la recepción del SYN del cliente.
+3. Finalmente, el cliente responde con un **ACK**, confirmando la respuesta del servidor. A partir de este momento, la conexión TCP queda establecida y pueden comenzar a intercambiarse datos.
+
+&nbsp;&nbsp;&nbsp;&nbsp;El **Four-way handshake** es el procedimiento utilizado normalmente para finalizar una conexión TCP. Debido a que TCP permite comunicación en ambos sentidos de forma independiente, cada extremo debe cerrar su dirección de transmisión. Por esto, normalmente se intercambian cuatro segmentos:
+
+1. Un extremo envía **FIN**, indicando que no enviará más datos.
+2. El otro extremo responde con **ACK**, confirmando la recepción del FIN.
+3. Luego, ese segundo extremo envía su propio **FIN**, indicando que tampoco enviará más datos.
+4. Finalmente, el primer extremo responde con **ACK**, quedando finalizada la conexión.
 
 **f) ¿Qué conclusión podemos sacar de que sea tan fácil ver un paquete que viaja a través de la red?**
 
