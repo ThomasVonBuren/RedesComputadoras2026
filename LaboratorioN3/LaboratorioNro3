@@ -69,6 +69,15 @@ sirve cada uno.**
 
 ## 2)
 
+![Captura wireshark](wireshark.png)
+
+a) La dirección MAC de origen es f8:54:f6:7a:97:0a y corresponde a la interfaz de red (placa Wi-Fi) de mi propia notebook, porque es el hardware físico que generó y transmitió la trama en el enlace local. La dirección MAC de destino es 78:4f:24:3b:73:a0 y corresponde a la interfaz LAN de mi router (default gateway), porque al estar el servidor de destino fuera de mi red local, mi equipo no puede entregarle la trama directamente y debe enviársela al enrutador.
+
+b) La dirección IP de origen es 192.168.1.7 y corresponde a la dirección lógica privada asignada a mi computadora dentro de mi subred local. La dirección IP de destino es 54.240.184.81 y corresponde a la dirección pública enrutable del servidor remoto en Internet con el cual se estableció la sesión TCP. 
+
+c) No representan lo mismo porque resuelven problemas en capas distintas. La dirección MAC opera en la Capa 2 (enlace de datos) y es un identificador físico de 48 bits fijado por el fabricante que solo tiene validez dentro de mi red local; sirve para que mi computadora y el router se comuniquen de forma directa en el mismo medio físico. En cambio, la dirección IP pertenece a la Capa 3 (red) y es un identificador lógico y jerárquico que permite encaminar los paquetes a través de Internet de extremo a extremo, manteniéndose invariable desde mi máquina hasta el servidor final sin importar cuántos nodos intermedios atraviese.
+
+d) En la cabecera Ethernet II, el campo EtherType presenta el valor 0x0800. Esto indica que el protocolo de capa superior encapsulado dentro de la carga útil de la trama es IPv4, funcionando dicho campo como mecanismo de desmultiplexación hacia la Capa 3.
 
 ---
 
