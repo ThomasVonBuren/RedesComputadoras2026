@@ -25,10 +25,10 @@
 
 ## 1) Punto
 
-**a) Apartado**
+**a) Vamos a empezar observando cómo se organiza la información dentro de una red local: 
+¿Qué función cumple la capa de enlace dentro del modelo OSI? ¿Qué tipo de comunicación resuelve? 
+Esta es la capa que va dentre la física y la de red, se encarga de tomar lo que le pasa a la capa de red y armar las tramas o frames para mandarlas por el medio físico, como lo hace, le pone a cada trama la dirección de origen y destino, las MAC, para que no se pisen las transmisiones controlando el medio y a través del uso de un CRC (campo de control de errores) se fija si la trama llegó bien, esa es su función. Resuelve el tipo de comunicación dentro de la red local, entre los dispositivos que estan conectados al mismo medio, entonces resuelve que un dato llegue de un dispositivo a otro que esta en la red sin necesidad de rutear. 
 
-![Texto alternativo](./foto.jpg) 
-*Figura 1: Leyenda de Imagen.*
 
 
 ---
