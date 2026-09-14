@@ -23,15 +23,14 @@
 
 ---
 
-## 1) Punto
+## 1) 
 
-**a) Vamos a empezar observando cómo se organiza la información dentro de una red local: 
-¿Qué función cumple la capa de enlace dentro del modelo OSI? ¿Qué tipo de comunicación resuelve? 
-Esta es la capa que va dentre la física y la de red, se encarga de tomar lo que le pasa a la capa de red y armar las tramas o frames para mandarlas por el medio físico, como lo hace, le pone a cada trama la dirección de origen y destino, las MAC, para que no se pisen las transmisiones controlando el medio y a través del uso de un CRC (campo de control de errores) se fija si la trama llegó bien, esa es su función. Resuelve el tipo de comunicación dentro de la red local, entre los dispositivos que estan conectados al mismo medio, entonces resuelve que un dato llegue de un dispositivo a otro que esta en la red sin necesidad de rutear. 
+**a) ¿Qué función cumple la capa de enlace dentro del modelo OSI? ¿Qué tipo de comunicación resuelve?** 
+&nbsp;&nbsp;&nbsp;&nbsp;Ésta es la capa que va dentro la física y la de red, se encarga de tomar lo que le pasa a la capa de red y armar las tramas o frames para mandarlas por el medio físico, como lo hace, le pone a cada trama la dirección de origen y destino, las MAC, para que no se pisen las transmisiones controlando el medio y a través del uso de un CRC (campo de control de errores) se fija si la trama llegó bien, esa es su función. Resuelve el tipo de comunicación dentro de la red local, entre los dispositivos que estan conectados al mismo medio, entonces resuelve que un dato llegue de un dispositivo a otro que esta en la red sin necesidad de rutear. 
 
-b) ¿Qué es una dirección MAC? ¿En qué se diferencia de una dirección IP? 
-La dirección MAC una dirección física y solo sirve dentro de la red local es decir  cuando el paquete pasa por un router para ir a otra red, la MAC ya no viaja con él,  es la que trae grabada de fábrica la placa de red del dispositivo (48 bits en hexadecimal )
-La IP es una dirección lógica, no viene de fábrica sino que se asigna y se puede cambiar, sirve para identificar un dispositivo en cualquier lugar de la red, no solo en la local y permite el ruteo entre redes distintas, tiene 32 bits en IPv4 o 128 en IPv6  esta se organiza una parte de red y una parte de host, para que los routers sepan hacia dónde mandar el paquete. La diferencia es la MAC dice qué dispositivo es dentro de la red local osea capa 2 fisica, pero la IP dice donde esta ese dispositivo dentro de toda la red capa 3 lógica y puede cambiar 
+**b) ¿Qué es una dirección MAC? ¿En qué se diferencia de una dirección IP?** 
+&nbsp;&nbsp;&nbsp;&nbsp;La dirección MAC una dirección física y solo sirve dentro de la red local es decir  cuando el paquete pasa por un router para ir a otra red, la MAC ya no viaja con él, es la que trae grabada de fábrica la placa de red del dispositivo (48 bits en hexadecimal )
+&nbsp;&nbsp;&nbsp;&nbsp;La IP es una dirección lógica, no viene de fábrica sino que se asigna y se puede cambiar, sirve para identificar un dispositivo en cualquier lugar de la red, no solo en la local y permite el ruteo entre redes distintas, tiene 32 bits en IPv4 o 128 en IPv6  esta se organiza una parte de red y una parte de host, para que los routers sepan hacia dónde mandar el paquete. La diferencia es la MAC dice qué dispositivo es dentro de la red local osea capa 2 fisica, pero la IP dice donde esta ese dispositivo dentro de toda la red capa 3 lógica y puede cambiar 
 
 
 ---
@@ -50,7 +49,7 @@ sirve cada uno.**
  
 4) Tipo/Longitud: 2 bytes que indican el protocolo de capa superior encapsulado en el formato Ethernet II o la longitud de datos de LLC en el formato IEEE 802.3.
 
-5) Datos y Relleno: Los datos contienen la unidad de datos del protocolo de capas superiores y el relleno añaden bytes adicionales si es que se da que los datos anteriores son muy cortos, esto esta hecho para garantizar que la trama alcance la longitud minima que se necesita por el estándar.
+5) Datos y Relleno: Los datos contienen la unidad de datos del protocolo de capas superiores y el relleno añaden bytes adicionales si es que se da que los datos anteriores son muy cortos, esto está hecho para garantizar que la trama alcance la longitud mínima que se necesita por el estándar.
 
 6) Secuencia de Verificación de Trama (FCS): Son 4 bytes que contienen un código de redundancia cíclica (CRC) para detectar errores de transmisión.
 
@@ -87,13 +86,13 @@ d) En la cabecera Ethernet II, el campo EtherType presenta el valor 0x0800. Esto
 
 ## 3)
 **a) ¿Qué problema(s) resuelve TCP que no resuelve directamente Ethernet ni IP?**
-&nbsp;&nbsp;&nbsp;&nbsp; Tanto ethernet como ip proporcionan un servicio que se encarga de enrutar y mover paquetes de un nodo a otro. Sin embargo no garantiza el orden de los paquetes ni tampoco que lleguen bien. Luego la capa TCP se encarga de proporcionar las siguientes soluciones: 
+&nbsp;&nbsp;&nbsp;&nbsp; Tanto ethernet como IP proporcionan un servicio que se encarga de enrutar y mover paquetes de un nodo a otro. Sin embargo, no garantiza el orden de los paquetes ni tampoco que lleguen bien. Luego la capa TCP se encarga de proporcionar las siguientes soluciones: 
 * Confiabilidad/control de perdidas: TCP detecta paquetes perdidos mediante confirmaciones (ACKs) y temporizadores, y luego realiza transmiciones de los datos faltantes.
 * Entrega en orden: TCP asigna números de secuencia a los datos para que el receptor pueda reordenar los segmentos correctamente antes de entregarlos a la capa de aplicación.
-* Control de flujo: Evita que el emisor envie datos de forma mucho mas rapida de lo que puede recibir el receptor, mediante TCP Windows 
-* Control de congestión: Ajusta la tasa de transmision para evitar el sobrecargamiento en los routers intermedios. 
-* Direccionamiento de aplicaciones: TCP permite que varias aplicaciones utilicen la red simultaneamente sin interferir en otras aplicaciones. Esto lo logra mediante los numeros de puerto tanto de origen como de destino
-* Estado: Permite establecer una conexion confiable entre el emisor y el receptor antes de transmitir datos. Ademas la finaliza al terminar
+* Control de flujo: Evita que el emisor envíe datos de forma mucho mas rapida de lo que puede recibir el receptor, mediante TCP Windows 
+* Control de congestión: Ajusta la tasa de transmisión para evitar el sobrecargamiento en los routers intermedios. 
+* Direccionamiento de aplicaciones: TCP permite que varias aplicaciones utilicen la red simultáneamente sin interferir en otras aplicaciones. Esto lo logra mediante los números de puerto tanto de origen como de destino.
+* Estado: Permite establecer una conexión confiable entre el emisor y el receptor antes de transmitir datos. Además la finaliza al terminar.
 
 **b) Investigar los campos más importantes de la metadata en un frame TCP. ¿Para qué sirve cada
 uno?**
@@ -117,7 +116,7 @@ Indica la posición del primer byte de datos de este segmento dentro del flujo g
 
 **3. Control de Longitud y Estado**
 
-* **Longitud de Cabecera / Offset de Datos (*Data Offset*)** — 4 bits: Indica el tamaño total de la cabecera TCP medido en palabras de 32 bits (4 bytes). Permite determinar exactamente dónde termina la cabecera e inicia el campo de datos 
+* **Longitud de Cabecera / Offset de Datos (*Data Offset*)** — 4 bits: Indica el tamaño total de la cabecera TCP medido en palabras de 32 bits (4 bytes). Permite determinar exactamente dónde termina la cabecera e inicia el campo de datos. 
 
 * **Reservado (*Reserved*)** — 6 bits: Bits reservados para uso futuro. Debe ser enviado en cero (`0`).
 
@@ -174,11 +173,11 @@ Las banderas controlan el estado de la conexión TCP y gestionan la transmisión
 ![Texto alternativo](./3C.png) 
 *Figura 3: Wireshark sniffando.*
 
-**d)
+**d)**
 
 ![Texto alternativo](./3D.png) 
 ![Texto alternativo](./3E.png) 
-*Figura 4, 5: Desglose del paquete y carga util.*
+*Figura 4, 5: Desglose del paquete y carga útil.*
 
 
 
