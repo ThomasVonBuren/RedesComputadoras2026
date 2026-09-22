@@ -19,21 +19,62 @@
 
 **Profesor:** Ingeniero Santiago Henn
 **Comisión:** ICOMP24-03
-**Año:** 20265
+**Año:** 2026
 
 ---
 
-## 1) Punto
+## 1)
 
-**a) Apartado
-
-![Texto alternativo](./foto.jpg) 
-*Figura 1: Leyenda de Imagen.*
 
 ---
 
-## 2)
+## 2) Implementación de Topología de VLAN
 
+![Texto alternativo](./Punto2_1.png)
+
+*Figura 1: Creación de diagrama lógico.*
+
+**a) Denominación de Switches a través de consola**
+
+![Texto alternativo](./Punto2_2.png)
+
+*Figura 2: Switch 1 llamado sw1.*
+
+![Texto alternativo](./Punto2_3.png)
+
+*Figura 3: Switch 2 llamado sw2.*
+
+**b) Asignación de contraseñas**
+
+![Texto alternativo](./Punto2_4.png)
+
+*Figura 4: Switch 1 contraseñas usando nombre de grupo en máyus.*
+
+![Texto alternativo](./Punto2_5.png)
+
+*Figura 5: Switch 2 contraseñas usando nombre de grupo en minús.*
+
+**c) Encriptado**
+
+![Texto alternativo](./Punto2_6.png)
+
+*Figura 6: Comando en switches para encriptar todas contraseñas.*
+
+&nbsp;&nbsp;&nbsp;&nbsp;Corroboramos las configuraciones de ambos Switch empleando el comando >sw(config)# do show running-config:
+
+![Texto alternativo](./Punto2_7.png)
+
+
+![Texto alternativo](./Punto2_8.png)
+
+*Figuras 7, 8: Switch 1 mostrando Hostname y encriptación.*
+
+![Texto alternativo](./Punto2_9.png)
+
+
+![Texto alternativo](./Punto2_10.png)
+
+*Figuras 9, 10: Switch 2 mostrando Hostname y encriptación.*
 
 ---
 
