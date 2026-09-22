@@ -37,10 +37,21 @@
 
 ---
 
-## 3)
+## 3) 
+&nbsp;&nbsp;&nbsp;&nbsp;Comprobamos que la conexión de internet de la clase Business se logre a través de NAT Overload:
+  ![Conexión de internet de la clase Business](./PruebaInternetBusiness.png) 
+*Figura 1: Conexión de internet de la clase Business.*
+Vemos en el CLI de el Router:
+![CLI al momento de probar el ping](./RouterNATBusiness.png) 
+*Figura 2: CLI al momento de probar el ping.*
+&nbsp;&nbsp;&nbsp;&nbsp;En la figura 2, el comando `show ip nat translations` nos demuestra la sobrecarga de puertos PAT/NAT overload. Esta configuración demuestra ser eficiente para limitar las direcciones IPv4 públicas. Como se traduce todo el segmento privado de la VLAN 20 a través de la dirección IP pública de la interfaz WAN, el router utiliza sockets para diferenciar las conexiones concurrentes de cada cliente. Esto garantiza la conexión a internet de los segmentos del avión autorizados, sin exponer la red interna.
+&nbsp;&nbsp;&nbsp;&nbsp;Ahora, realizamos las pruebas de la clase turista:
+![Pruebas de conectividad de la clase turista](./PruebaPingTurista.png) 
+*Figura 3: Pruebas de conectividad de la clase turista.*
+![Acceso al sitio web desde la clase turista](./ConexionWebTurista.png) 
+*Figura 4: Acceso al sitio web desde la clase turista.*
+&nbsp;&nbsp;&nbsp;&nbsp;En las figuras, podemos comprobar que quien se encuentre en la clase turista puede acceder exitosamente a la plataforma de entretenimiento, mas no puede acceder al internet libremente (Destination Host unreachable al hacer ping 8.8.8.8). Esto significa que el router detecta correctamente la IP de la clase turista, evalúa la regla `deny ip 10.10.10.0 0.0.0.255 any`, y descarta la solicitud inmediatamente.  
 
 
----
 
-## 4)
 
