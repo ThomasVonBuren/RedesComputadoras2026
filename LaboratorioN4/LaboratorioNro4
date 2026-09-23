@@ -4,7 +4,7 @@
 
 ### CÁTEDRA DE REDES DE COMPUTADORAS
 
-**TRABAJO DE LABORATORIO Nro. 3**
+**TRABAJO DE LABORATORIO Nro. 4**
 
 **Alumnos:**
 
@@ -24,8 +24,15 @@
 ---
 
 ## 1)
+**c) protocolo IEEE 802.1Q. y relacion con V-Lan**
+El protocolo IEEE 802.1Q. es un estandar que permite verificar a que VLAN pertenece una trama Ethernet cuando esta cirucla por un enlace que transporta trafico de varias de estas, como un enlace trunk entre switches o entre un switch y un router.
+Para hacerlo, 802.1Q agrega una etiqueta (tag) de 4 bytes dentro de la trama Ethernet. Esta etiqueta contiene, un identificador llamado VLAN ID (VID), que indica a que VLAN pertenece la trama. El campo VLAN ID posee 12 bits, por lo que permite representar hasta 4096 valores, aunque normalmente se utilizan las VLAN 1 a 4094.
+De esta manera, distintas VLAN pueden compartir un mismo enlace fisico sin mezclarse logicamente. Cuando una trama atraviesa un enlace trunk, el dispositivo receptor puede leer el VLAN ID y determinar a que VLAN debe entregar el trafico.
 
-
+**d) Tagging**
+El Tagging es el proceso mediante el cual se agrega a una trama Ethernet una etiqueta que indica a que VLAN pertenece. En redes Ethernet, este etiquetado se realiza normalmente utilizando el estándar IEEE 802.1Q.
+La etiqueta contiene principalmente el VLAN ID, permitiendo que un enlace trunk pueda transportar tráfico correspondiente a múltiples VLAN.
+Generalmente, los dispositivos finales conectados a puertos access envian y reciben tramas sin etiquetar. El switch asocia esas tramas con la VLAN configurada en el puerto y, cuando debe enviarlas por un enlace trunk, agrega el tag 802.1Q correspondiente. Al llegar al switch de destino, este lee la etiqueta para identificar la VLAN.
 ---
 
 ## 2) Implementación de Topología de VLAN
