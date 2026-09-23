@@ -25,6 +25,23 @@
 
 ## 1)
 
+**a) Clasificación de las redes según su alcance:**
+
+* **PAN (Personal Area Network):** Es una red de ordenadores usada para la comunicación entre los dispositivos de la computadora cerca de una persona.
+* **LAN (Local Area Network):** Es una red que se limita a un área especial relativamente pequeña tal como un cuarto, un solo edificio, una nave.
+* **MAN (Metropolitan Area Network):** Es una red de alta velocidad (banda ancha) que da cobertura en un área geográfica más extensa como una ciudad.
+* **WAN (Wide Area Network):** Son redes informáticas que se extienden sobre un área geográfica extensa utilizando medios como: satélites, cables interoceánicos, Internet, fibras ópticas públicas, etc…
+
+**b) ¿Qué es una vLAN? ¿Cómo se clasifican?:**
+
+Una **VLAN** *(Virtual Local Area Network)* es una manera de conseguir múltiples redes lógicas en un mismo sistema de hardware. Sirven para reducir el dominio de difusión y ayudan en la administración de la red. Al contrario que en las redes LAN tradicionales donde todos los dispositivos conectados a ella interactúan entre sí, las VLAN cambian esto dividiendo la red total en segmentos lógicos más pequeños, de esta manera cada VLAN se transforma en una red independiente mejorando la seguridad y reduciendo tráfico innecesario.
+
+**Tipos de VLAN:**
+
+* **VLAN por Puerto (Nivel 1):** Es el método más utilizado y consiste en asignar puertos específicos del *switch* a una VLAN determinada, de modo que cualquier equipo conectado a dicho puerto pertenecerá a esa red. Su principal ventaja es la simplicidad de configuración, aunque carece de movilidad, ya que cambiar físicamente de puerto exige reconfigurar el dispositivo.
+* **VLAN por Dirección MAC (Nivel 2):** Asocia la pertenencia a la VLAN a la dirección física (MAC) de la tarjeta de red del dispositivo. Ofrece total movilidad al usuario dentro de la infraestructura, pues mantendrá su misma red sin importar a qué puerto del *switch* se conecte, aunque requiere un trabajo administrativo pesado para registrar cada dirección individualmente.
+* **VLAN por Protocolo o Subred (Nivel 3):** Determina la VLAN examinando la cabecera del paquete de capa de red, agrupando el tráfico según el protocolo utilizado (por ejemplo, IPv4 o IPv6) o la dirección IP de subred. Esto permite segmentar la red según criterios lógicos de capa 3 y que un mismo equipo participe en múltiples VLANs si utiliza diferentes protocolos.
+* **VLAN de Niveles Superiores (Capas 4 a 7):** Agrupa el tráfico basándose en criterios avanzados de las capas altas, como el tipo de servicio o aplicación (correo electrónico, FTP, streaming), así como combinaciones de puertos de transporte, horarios de acceso o políticas de seguridad, logrando una segmentación altamente adaptada a las necesidades operativas.
 
 ---
 
