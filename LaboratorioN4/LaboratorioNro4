@@ -43,6 +43,23 @@ Una **VLAN** *(Virtual Local Area Network)* es una manera de conseguir múltiple
 * **VLAN por Protocolo o Subred (Nivel 3):** Determina la VLAN examinando la cabecera del paquete de capa de red, agrupando el tráfico según el protocolo utilizado (por ejemplo, IPv4 o IPv6) o la dirección IP de subred. Esto permite segmentar la red según criterios lógicos de capa 3 y que un mismo equipo participe en múltiples VLANs si utiliza diferentes protocolos.
 * **VLAN de Niveles Superiores (Capas 4 a 7):** Agrupa el tráfico basándose en criterios avanzados de las capas altas, como el tipo de servicio o aplicación (correo electrónico, FTP, streaming), así como combinaciones de puertos de transporte, horarios de acceso o políticas de seguridad, logrando una segmentación altamente adaptada a las necesidades operativas.
 
+**c) Protocolo IEEE 802.1Q y relación con VLAN**
+
+El protocolo IEEE 802.1Q es un estándar que permite verificar a qué VLAN pertenece una trama Ethernet cuando esta circula por un enlace que transporta tráfico de varias de estas, como un enlace trunk entre switches o entre un switch y un router.
+
+Para hacerlo, 802.1Q agrega una etiqueta (tag) de 4 bytes dentro de la trama Ethernet. Esta etiqueta contiene un identificador llamado VLAN ID (VID), que indica a qué VLAN pertenece la trama. El campo VLAN ID posee 12 bits, por lo que permite representar hasta 4096 valores, aunque normalmente se utilizan las VLAN 1 a 4094.
+
+De esta manera, distintas VLAN pueden compartir un mismo enlace físico sin mezclarse lógicamente. Cuando una trama atraviesa un enlace trunk, el dispositivo receptor puede leer el VLAN ID y determinar a qué VLAN debe entregar el tráfico.
+
+**d) Tagging**
+
+El Tagging es el proceso mediante el cual se agrega a una trama Ethernet una etiqueta que indica a qué VLAN pertenece. En redes Ethernet, este etiquetado se realiza normalmente utilizando el estándar IEEE 802.1Q.
+
+La etiqueta contiene principalmente el VLAN ID, permitiendo que un enlace trunk pueda transportar tráfico correspondiente a múltiples VLAN.
+
+Generalmente, los dispositivos finales conectados a puertos access envían y reciben tramas sin etiquetar. El switch asocia esas tramas con la VLAN configurada en el puerto y, cuando debe enviarlas por un enlace trunk, agrega el tag 802.1Q correspondiente. Al llegar al switch de destino, este lee la etiqueta para identificar la VLAN.
+
+
 ---
 
 ## 2) Implementación de Topología de VLAN
