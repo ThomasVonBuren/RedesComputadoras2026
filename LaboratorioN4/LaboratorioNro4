@@ -4,7 +4,7 @@
 
 ### CÁTEDRA DE REDES DE COMPUTADORAS
 
-**TRABAJO DE LABORATORIO Nro. 4**
+**TRABAJO DE LABORATORIO Nro. 3**
 
 **Alumnos:**
 
@@ -24,15 +24,42 @@
 ---
 
 ## 1)
-**c) protocolo IEEE 802.1Q. y relacion con V-Lan**
-El protocolo IEEE 802.1Q. es un estandar que permite verificar a que VLAN pertenece una trama Ethernet cuando esta cirucla por un enlace que transporta trafico de varias de estas, como un enlace trunk entre switches o entre un switch y un router.
-Para hacerlo, 802.1Q agrega una etiqueta (tag) de 4 bytes dentro de la trama Ethernet. Esta etiqueta contiene, un identificador llamado VLAN ID (VID), que indica a que VLAN pertenece la trama. El campo VLAN ID posee 12 bits, por lo que permite representar hasta 4096 valores, aunque normalmente se utilizan las VLAN 1 a 4094.
-De esta manera, distintas VLAN pueden compartir un mismo enlace fisico sin mezclarse logicamente. Cuando una trama atraviesa un enlace trunk, el dispositivo receptor puede leer el VLAN ID y determinar a que VLAN debe entregar el trafico.
+
+**a) Clasificación de las redes según su alcance:**
+
+* **PAN (Personal Area Network):** Es una red de ordenadores usada para la comunicación entre los dispositivos de la computadora cerca de una persona.
+* **LAN (Local Area Network):** Es una red que se limita a un área especial relativamente pequeña tal como un cuarto, un solo edificio, una nave.
+* **MAN (Metropolitan Area Network):** Es una red de alta velocidad (banda ancha) que da cobertura en un área geográfica más extensa como una ciudad.
+* **WAN (Wide Area Network):** Son redes informáticas que se extienden sobre un área geográfica extensa utilizando medios como: satélites, cables interoceánicos, Internet, fibras ópticas públicas, etc…
+
+**b) ¿Qué es una vLAN? ¿Cómo se clasifican?:**
+
+Una **VLAN** *(Virtual Local Area Network)* es una manera de conseguir múltiples redes lógicas en un mismo sistema de hardware. Sirven para reducir el dominio de difusión y ayudan en la administración de la red. Al contrario que en las redes LAN tradicionales donde todos los dispositivos conectados a ella interactúan entre sí, las VLAN cambian esto dividiendo la red total en segmentos lógicos más pequeños, de esta manera cada VLAN se transforma en una red independiente mejorando la seguridad y reduciendo tráfico innecesario.
+
+**Tipos de VLAN:**
+
+* **VLAN por Puerto (Nivel 1):** Es el método más utilizado y consiste en asignar puertos específicos del *switch* a una VLAN determinada, de modo que cualquier equipo conectado a dicho puerto pertenecerá a esa red. Su principal ventaja es la simplicidad de configuración, aunque carece de movilidad, ya que cambiar físicamente de puerto exige reconfigurar el dispositivo.
+* **VLAN por Dirección MAC (Nivel 2):** Asocia la pertenencia a la VLAN a la dirección física (MAC) de la tarjeta de red del dispositivo. Ofrece total movilidad al usuario dentro de la infraestructura, pues mantendrá su misma red sin importar a qué puerto del *switch* se conecte, aunque requiere un trabajo administrativo pesado para registrar cada dirección individualmente.
+* **VLAN por Protocolo o Subred (Nivel 3):** Determina la VLAN examinando la cabecera del paquete de capa de red, agrupando el tráfico según el protocolo utilizado (por ejemplo, IPv4 o IPv6) o la dirección IP de subred. Esto permite segmentar la red según criterios lógicos de capa 3 y que un mismo equipo participe en múltiples VLANs si utiliza diferentes protocolos.
+* **VLAN de Niveles Superiores (Capas 4 a 7):** Agrupa el tráfico basándose en criterios avanzados de las capas altas, como el tipo de servicio o aplicación (correo electrónico, FTP, streaming), así como combinaciones de puertos de transporte, horarios de acceso o políticas de seguridad, logrando una segmentación altamente adaptada a las necesidades operativas.
+
+**c) Protocolo IEEE 802.1Q y relación con VLAN**
+
+El protocolo IEEE 802.1Q es un estándar que permite verificar a qué VLAN pertenece una trama Ethernet cuando esta circula por un enlace que transporta tráfico de varias de estas, como un enlace trunk entre switches o entre un switch y un router.
+
+Para hacerlo, 802.1Q agrega una etiqueta (tag) de 4 bytes dentro de la trama Ethernet. Esta etiqueta contiene un identificador llamado VLAN ID (VID), que indica a qué VLAN pertenece la trama. El campo VLAN ID posee 12 bits, por lo que permite representar hasta 4096 valores, aunque normalmente se utilizan las VLAN 1 a 4094.
+
+De esta manera, distintas VLAN pueden compartir un mismo enlace físico sin mezclarse lógicamente. Cuando una trama atraviesa un enlace trunk, el dispositivo receptor puede leer el VLAN ID y determinar a qué VLAN debe entregar el tráfico.
 
 **d) Tagging**
-El Tagging es el proceso mediante el cual se agrega a una trama Ethernet una etiqueta que indica a que VLAN pertenece. En redes Ethernet, este etiquetado se realiza normalmente utilizando el estándar IEEE 802.1Q.
+
+El Tagging es el proceso mediante el cual se agrega a una trama Ethernet una etiqueta que indica a qué VLAN pertenece. En redes Ethernet, este etiquetado se realiza normalmente utilizando el estándar IEEE 802.1Q.
+
 La etiqueta contiene principalmente el VLAN ID, permitiendo que un enlace trunk pueda transportar tráfico correspondiente a múltiples VLAN.
-Generalmente, los dispositivos finales conectados a puertos access envian y reciben tramas sin etiquetar. El switch asocia esas tramas con la VLAN configurada en el puerto y, cuando debe enviarlas por un enlace trunk, agrega el tag 802.1Q correspondiente. Al llegar al switch de destino, este lee la etiqueta para identificar la VLAN.
+
+Generalmente, los dispositivos finales conectados a puertos access envían y reciben tramas sin etiquetar. El switch asocia esas tramas con la VLAN configurada en el puerto y, cuando debe enviarlas por un enlace trunk, agrega el tag 802.1Q correspondiente. Al llegar al switch de destino, este lee la etiqueta para identificar la VLAN.
+
+
 ---
 
 ## 2) Implementación de Topología de VLAN
