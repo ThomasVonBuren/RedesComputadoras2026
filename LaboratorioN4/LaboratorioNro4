@@ -47,7 +47,7 @@ Una **VLAN** *(Virtual Local Area Network)* es una manera de conseguir múltiple
 
 ## 2) Implementación de Topología de VLAN
 
-![Texto alternativo](./Punto2_1.png)
+![Texto alternativo](.//fotos%20tp4/topologia.png)
 
 *Figura 1: Creación de diagrama lógico.*
 
@@ -92,6 +92,81 @@ Una **VLAN** *(Virtual Local Area Network)* es una manera de conseguir múltiple
 ![Texto alternativo](./Punto2_10.png)
 
 *Figuras 9, 10: Switch 2 mostrando Hostname y encriptación.*
+
+**d) Configuracón de las VLAN**
+
+![Texto alternaivo](./fotos%20tp4/crear%20vlan1.png)
+
+![Texto alternaivo](./fotos%20tp4/crear%20vlan%201%20sw2.png)
+
+*Figuras 11, 12: Configuración de las VLAN para ambos switch.*
+**e) Desconección de interfaces**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Nos fijamos cuales son las interfaces que no estan siendo utilizadas:
+
+
+![Texto alternativo](./fotos%20tp4/interfaces%20on%20sw%201.png)
+![Texto alternativo](./fotos%20tp4/interfaces%20on.png)
+*Figuras 13, 14: Interfaces que no estan siendo utilizadas*
+
+&nbsp;&nbsp;&nbsp;&nbsp;Desactivamos las interfaces que no estamos utilizando, seleccionandolas con interface range y luego haciendoles un shutdown.
+
+![Texto alternativo](./fotos%20tp4/interfaces%20off%20sw%201.png)
+![Texto alternativo](./fotos%20tp4/interfaces%20of.png)
+*Figuras 15, 16: Interfaces que no estan siendo utilizadas deshabilitadas.*
+
+**g) Testeo con pings para las PCs**
+
+![Texto alternativo](./fotos%20tp4/test%20de%20ping.png)
+
+*Figuras 17: Test de pings de PC-A a PC-B*
+
+
+**h) Creación de VLANs**
+![Texto alternativo](./fotos%20tp4/vlans%20creadas.png)
+![Texto alternativo](./fotos%20tp4/vlans%20creadas%20sw2.png)
+*Figuras 18,19: VLANs Laboratorio, Bar, Management*
+**i) Lista de VLANs**
+
+&nbsp;&nbsp;&nbsp;&nbsp;La VLAN utilizada pordefecto es la VLAN1 (default), los puertos del switch vienen asignados por defecto a la misma hasta que los reasignemos manualmente.
+
+![Texto alternativo](./fotos%20tp4/showvlan.png)
+*Figura 20: Lista de VLANs*
+
+**j) Asignar PC-A a VLAN Laboratorio**
+
+![Texto alternativo](./fotos%20tp4/j\)sw1.png)
+*Figura 21: PC-A asignada a la VLAN Laboratorio*
+
+**k) Configurar VLAN 1 y 99**
+
+![Texto alternativo](./fotos%20tp4/k\)%20sw1.png)
+*Figura 22: Desde la VLAN 1 remover la ip y asignarla para funcionar en la VLAN 99*
+
+**l) Estado de la VLAN e interfaces**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Podemos ver que las VLANs 10(Laboratorio), 20(Bar), 99(Management) se crearon exitosamente y están con un estado activo. Se ve que también se asignó correctamente la VLAN 10 al puerto Fa0/6 que corresponde a la PC-A, mientras que las VLANs 20 y 99 no tienen ningún puerto físico asignado.
+&nbsp;&nbsp;&nbsp;&nbsp;En cuanto a las interfaces vemos que tanto Fa0/1, que tiene enlace con el sw2, y el Fa0/6, que tiene enlace con la PC-A, se encuentran en estado up. Mientras se ve cómo se deshabilitaron las interfaces que no estaban siendo utilizadas.
+&nbsp;&nbsp;&nbsp;&nbsp;Algo a tener en cuenta es que la VLAN 99 si bien tiene el status en up, vemos que su Protocol esta en down. Esto pasa porque no existe una conexión fisica en la VLAN 99.
+
+ ![Texto alternativo](./fotos%20tp4/I\)sw%201.png)
+ *Figura 23: Estado de las VLANs e Interfaces
+
+
+**m) Repetir proceso de la PC-A en la PC-B**
+
+![Texto alternativo](./fotos%20tp4/j,k\)%20sw%202.png)
+*Figura 24: Configuracion de las VLANs para la PC-B*
+
+**n) Conectividad entre PC-A con PC-B y sw1 con sw2**
+
+&nbsp;&nbsp;&nbsp;&nbsp;La conectividad entre la PC-A y PC-B sufre una perdida de 100%, esto se debe a que las computadoras están configuradas dentro de la VLAN 10, pero el enlace fisico entre los switch se encuentraen el VLAN 1. Debido a esto los switch no pueden transportar tramas que estan en la trama de la VLAN 10.
+&nbsp;&nbsp;&nbsp;&nbsp;En cuanto a la conectividad entre sw1 y sw2 vemos que tiene un 0% de exito, como no tiene ningún puerto físico asignado a la VLAN 99, los switchs carecen de una via de comunicacion para intercambiar el trafico de IP de gestión
+
+![Texto alternativo](./fotos%20tp4/testping%20pc2.png)
+![Texto alternativo](./fotos%20tp4/ping%20sw%20.png)
+*Figura 25, 26: Testeo de pings entre los dispositivos*
+
 
 ---
 
