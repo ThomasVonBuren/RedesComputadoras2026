@@ -34,7 +34,7 @@
 
 **b) ¿Qué es una vLAN? ¿Cómo se clasifican?:**
 
-Una **VLAN** *(Virtual Local Area Network)* es una manera de conseguir múltiples redes lógicas en un mismo sistema de hardware. Sirven para reducir el dominio de difusión y ayudan en la administración de la red. Al contrario que en las redes LAN tradicionales donde todos los dispositivos conectados a ella interactúan entre sí, las VLAN cambian esto dividiendo la red total en segmentos lógicos más pequeños, de esta manera cada VLAN se transforma en una red independiente mejorando la seguridad y reduciendo tráfico innecesario.
+&nbsp;&nbsp;&nbsp;&nbsp;Una **VLAN** *(Virtual Local Area Network)* es una manera de conseguir múltiples redes lógicas en un mismo sistema de hardware. Sirven para reducir el dominio de difusión y ayudan en la administración de la red. Al contrario que en las redes LAN tradicionales donde todos los dispositivos conectados a ella interactúan entre sí, las VLAN cambian esto dividiendo la red total en segmentos lógicos más pequeños, de esta manera cada VLAN se transforma en una red independiente mejorando la seguridad y reduciendo tráfico innecesario.
 
 **Tipos de VLAN:**
 
@@ -45,26 +45,26 @@ Una **VLAN** *(Virtual Local Area Network)* es una manera de conseguir múltiple
 
 **c) Protocolo IEEE 802.1Q y relación con VLAN**
 
-El protocolo IEEE 802.1Q es un estándar que permite verificar a qué VLAN pertenece una trama Ethernet cuando esta circula por un enlace que transporta tráfico de varias de estas, como un enlace trunk entre switches o entre un switch y un router.
+&nbsp;&nbsp;&nbsp;&nbsp;El protocolo IEEE 802.1Q es un estándar que permite verificar a qué VLAN pertenece una trama Ethernet cuando esta circula por un enlace que transporta tráfico de varias de estas, como un enlace trunk entre switches o entre un switch y un router.
 
-Para hacerlo, 802.1Q agrega una etiqueta (tag) de 4 bytes dentro de la trama Ethernet. Esta etiqueta contiene un identificador llamado VLAN ID (VID), que indica a qué VLAN pertenece la trama. El campo VLAN ID posee 12 bits, por lo que permite representar hasta 4096 valores, aunque normalmente se utilizan las VLAN 1 a 4094.
+&nbsp;&nbsp;&nbsp;&nbsp;Para hacerlo, 802.1Q agrega una etiqueta (tag) de 4 bytes dentro de la trama Ethernet. Esta etiqueta contiene un identificador llamado VLAN ID (VID), que indica a qué VLAN pertenece la trama. El campo VLAN ID posee 12 bits, por lo que permite representar hasta 4096 valores, aunque normalmente se utilizan las VLAN 1 a 4094.
 
-De esta manera, distintas VLAN pueden compartir un mismo enlace físico sin mezclarse lógicamente. Cuando una trama atraviesa un enlace trunk, el dispositivo receptor puede leer el VLAN ID y determinar a qué VLAN debe entregar el tráfico.
+&nbsp;&nbsp;&nbsp;&nbsp;De esta manera, distintas VLAN pueden compartir un mismo enlace físico sin mezclarse lógicamente. Cuando una trama atraviesa un enlace trunk, el dispositivo receptor puede leer el VLAN ID y determinar a qué VLAN debe entregar el tráfico.
 
 **d) Tagging**
 
-El Tagging es el proceso mediante el cual se agrega a una trama Ethernet una etiqueta que indica a qué VLAN pertenece. En redes Ethernet, este etiquetado se realiza normalmente utilizando el estándar IEEE 802.1Q.
+&nbsp;&nbsp;&nbsp;&nbsp;El Tagging es el proceso mediante el cual se agrega a una trama Ethernet una etiqueta que indica a qué VLAN pertenece. En redes Ethernet, este etiquetado se realiza normalmente utilizando el estándar IEEE 802.1Q.
 
-La etiqueta contiene principalmente el VLAN ID, permitiendo que un enlace trunk pueda transportar tráfico correspondiente a múltiples VLAN.
+&nbsp;&nbsp;&nbsp;&nbsp;La etiqueta contiene principalmente el VLAN ID, permitiendo que un enlace trunk pueda transportar tráfico correspondiente a múltiples VLAN.
 
-Generalmente, los dispositivos finales conectados a puertos access envían y reciben tramas sin etiquetar. El switch asocia esas tramas con la VLAN configurada en el puerto y, cuando debe enviarlas por un enlace trunk, agrega el tag 802.1Q correspondiente. Al llegar al switch de destino, este lee la etiqueta para identificar la VLAN.
+&nbsp;&nbsp;&nbsp;&nbsp;Generalmente, los dispositivos finales conectados a puertos access envían y reciben tramas sin etiquetar. El switch asocia esas tramas con la VLAN configurada en el puerto y, cuando debe enviarlas por un enlace trunk, agrega el tag 802.1Q correspondiente. Al llegar al switch de destino, este lee la etiqueta para identificar la VLAN.
 
 
 ---
 
 ## 2) Implementación de Topología de VLAN
 
-![Texto alternativo](.//fotos%20tp4/topologia.png)
+![Texto alternativo](./Punto2_1.png)
 
 *Figura 1: Creación de diagrama lógico.*
 
@@ -98,13 +98,11 @@ Generalmente, los dispositivos finales conectados a puertos access envían y rec
 
 ![Texto alternativo](./Punto2_7.png)
 
-
 ![Texto alternativo](./Punto2_8.png)
 
 *Figuras 7, 8: Switch 1 mostrando Hostname y encriptación.*
 
 ![Texto alternativo](./Punto2_9.png)
-
 
 ![Texto alternativo](./Punto2_10.png)
 
@@ -117,19 +115,23 @@ Generalmente, los dispositivos finales conectados a puertos access envían y rec
 ![Texto alternaivo](./fotos%20tp4/crear%20vlan%201%20sw2.png)
 
 *Figuras 11, 12: Configuración de las VLAN para ambos switch.*
+
 **e) Desconección de interfaces**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Nos fijamos cuales son las interfaces que no estan siendo utilizadas:
 
-
 ![Texto alternativo](./fotos%20tp4/interfaces%20on%20sw%201.png)
+
 ![Texto alternativo](./fotos%20tp4/interfaces%20on.png)
+
 *Figuras 13, 14: Interfaces que no estan siendo utilizadas*
 
 &nbsp;&nbsp;&nbsp;&nbsp;Desactivamos las interfaces que no estamos utilizando, seleccionandolas con interface range y luego haciendoles un shutdown.
 
 ![Texto alternativo](./fotos%20tp4/interfaces%20off%20sw%201.png)
+
 ![Texto alternativo](./fotos%20tp4/interfaces%20of.png)
+
 *Figuras 15, 16: Interfaces que no estan siendo utilizadas deshabilitadas.*
 
 **g) Testeo con pings para las PCs**
@@ -138,68 +140,92 @@ Generalmente, los dispositivos finales conectados a puertos access envían y rec
 
 *Figuras 17: Test de pings de PC-A a PC-B*
 
-
 **h) Creación de VLANs**
+
 ![Texto alternativo](./fotos%20tp4/vlans%20creadas.png)
+
 ![Texto alternativo](./fotos%20tp4/vlans%20creadas%20sw2.png)
+
 *Figuras 18,19: VLANs Laboratorio, Bar, Management*
+
 **i) Lista de VLANs**
 
 &nbsp;&nbsp;&nbsp;&nbsp;La VLAN utilizada pordefecto es la VLAN1 (default), los puertos del switch vienen asignados por defecto a la misma hasta que los reasignemos manualmente.
 
 ![Texto alternativo](./fotos%20tp4/showvlan.png)
+
 *Figura 20: Lista de VLANs*
 
 **j) Asignar PC-A a VLAN Laboratorio**
 
 ![Texto alternativo](./fotos%20tp4/j\)sw1.png)
+
 *Figura 21: PC-A asignada a la VLAN Laboratorio*
 
 **k) Configurar VLAN 1 y 99**
 
 ![Texto alternativo](./fotos%20tp4/k\)%20sw1.png)
+
 *Figura 22: Desde la VLAN 1 remover la ip y asignarla para funcionar en la VLAN 99*
 
 **l) Estado de la VLAN e interfaces**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Podemos ver que las VLANs 10(Laboratorio), 20(Bar), 99(Management) se crearon exitosamente y están con un estado activo. Se ve que también se asignó correctamente la VLAN 10 al puerto Fa0/6 que corresponde a la PC-A, mientras que las VLANs 20 y 99 no tienen ningún puerto físico asignado.
+
 &nbsp;&nbsp;&nbsp;&nbsp;En cuanto a las interfaces vemos que tanto Fa0/1, que tiene enlace con el sw2, y el Fa0/6, que tiene enlace con la PC-A, se encuentran en estado up. Mientras se ve cómo se deshabilitaron las interfaces que no estaban siendo utilizadas.
+
 &nbsp;&nbsp;&nbsp;&nbsp;Algo a tener en cuenta es que la VLAN 99 si bien tiene el status en up, vemos que su Protocol esta en down. Esto pasa porque no existe una conexión fisica en la VLAN 99.
 
- ![Texto alternativo](./fotos%20tp4/I\)sw%201.png)
- *Figura 23: Estado de las VLANs e Interfaces
+![Texto alternativo](./fotos%20tp4/I\)sw%201.png)
 
+*Figura 23: Estado de las VLANs e Interfaces
 
 **m) Repetir proceso de la PC-A en la PC-B**
 
 ![Texto alternativo](./fotos%20tp4/j,k\)%20sw%202.png)
+
 *Figura 24: Configuracion de las VLANs para la PC-B*
 
 **n) Conectividad entre PC-A con PC-B y sw1 con sw2**
 
 &nbsp;&nbsp;&nbsp;&nbsp;La conectividad entre la PC-A y PC-B sufre una perdida de 100%, esto se debe a que las computadoras están configuradas dentro de la VLAN 10, pero el enlace fisico entre los switch se encuentraen el VLAN 1. Debido a esto los switch no pueden transportar tramas que estan en la trama de la VLAN 10.
+
 &nbsp;&nbsp;&nbsp;&nbsp;En cuanto a la conectividad entre sw1 y sw2 vemos que tiene un 0% de exito, como no tiene ningún puerto físico asignado a la VLAN 99, los switchs carecen de una via de comunicacion para intercambiar el trafico de IP de gestión
 
 ![Texto alternativo](./fotos%20tp4/testping%20pc2.png)
-![Texto alternativo](./fotos%20tp4/ping%20sw%20.png)
-*Figura 25, 26: Testeo de pings entre los dispositivos*
 
+![Texto alternativo](./fotos%20tp4/ping%20sw%20.png)
+
+*Figura 25, 26: Testeo de pings entre los dispositivos*
 
 ---
 
 ## 3) 
+
 &nbsp;&nbsp;&nbsp;&nbsp;Comprobamos que la conexión de internet de la clase Business se logre a través de NAT Overload:
-  ![Conexión de internet de la clase Business](./PruebaInternetBusiness.png) 
+
+![Conexión de internet de la clase Business](./PruebaInternetBusiness.png) 
+
 *Figura 1: Conexión de internet de la clase Business.*
+
 Vemos en el CLI de el Router:
-![CLI al momento de probar el ping](./RouterNATBusiness.png) 
+
+![CLI al momento de probar el ping](./RouterNATBusiness.png)
+
 *Figura 2: CLI al momento de probar el ping.*
+
 &nbsp;&nbsp;&nbsp;&nbsp;En la figura 2, el comando `show ip nat translations` nos demuestra la sobrecarga de puertos PAT/NAT overload. Esta configuración demuestra ser eficiente para limitar las direcciones IPv4 públicas. Como se traduce todo el segmento privado de la VLAN 20 a través de la dirección IP pública de la interfaz WAN, el router utiliza sockets para diferenciar las conexiones concurrentes de cada cliente. Esto garantiza la conexión a internet de los segmentos del avión autorizados, sin exponer la red interna.
+
 &nbsp;&nbsp;&nbsp;&nbsp;Ahora, realizamos las pruebas de la clase turista:
-![Pruebas de conectividad de la clase turista](./PruebaPingTurista.png) 
+
+![Pruebas de conectividad de la clase turista](./PruebaPingTurista.png)
+
 *Figura 3: Pruebas de conectividad de la clase turista.*
-![Acceso al sitio web desde la clase turista](./ConexionWebTurista.png) 
+
+![Acceso al sitio web desde la clase turista](./ConexionWebTurista.png)
+
 *Figura 4: Acceso al sitio web desde la clase turista.*
+
 &nbsp;&nbsp;&nbsp;&nbsp;En las figuras, podemos comprobar que quien se encuentre en la clase turista puede acceder exitosamente a la plataforma de entretenimiento, mas no puede acceder al internet libremente (Destination Host unreachable al hacer ping 8.8.8.8). Esto significa que el router detecta correctamente la IP de la clase turista, evalúa la regla `deny ip 10.10.10.0 0.0.0.255 any`, y descarta la solicitud inmediatamente.  
 
 
