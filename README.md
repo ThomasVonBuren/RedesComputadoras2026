@@ -20,4 +20,6 @@
 
 ## Herramientas Utilizadas
 
-* **Framework:** Cisco Packet Tracer
+* **Análisis y Simulación:** Cisco Packet Tracer - Wireshark - NetCat - PacketSender
+* **IDEs:** Visual Studio Code
+* **Lenguajes:** Python - C++
