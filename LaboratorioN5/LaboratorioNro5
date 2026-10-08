@@ -8,14 +8,15 @@
 
 **Alumnos:**
 
-* Tosolini Franco Alberto (45702152)
-* Scagliotti Marco (46070301)
-* Barbero Giovanna Luz (46509956)
-* von Büren Thomas (43136697)
-* Prieto Quiroz Franco Manuel (46450221)
-* Boyé Facundo (46070306)
-* Frenguelli Guillermina (45154313)
-* Arias valentin (45734482)
+- Tosolini Franco Alberto (45702152)
+- Scagliotti Marco (46070301)
+- Barbero Giovanna Luz (46509956)
+- von Büren Thomas (43136697)
+- Prieto Quiroz Franco Manuel (46450221)
+- Boyé Facundo (46070306)
+- Frenguelli Guillermina (45154313)
+- Arias valentin (45734482)
+
 
 **Profesor:** Ingeniero Santiago Henn
 **Comisión:** ICOMP24-03
@@ -24,15 +25,31 @@
 ---
 
 ## 1) 
+**a )**
+
+&nbsp;&nbsp;&nbsp;&nbsp;El protocolo de mensajes de control de Internet (ICMP) es un conjunto de reglas de comunicación que los dispositivos utilizan para comunicar errores de transmisión de datos en una red.
+Se usa principalmente para la notificacion de errores, casos como destinos imposibles de localizar, tiempos de espera elevados o fragmentacion en los mensajes, tambien para el diagnostico de una red y la seguridad de la misma.
+No lo hace de manera directa, pero si trabajan en conjunto, la principal diferencia es que TCP  y UDP son protocolos con necesidad de conexion, y entre sus funciones aseguran el envio del mensaje, en cambio ICMP solo se encarga de la notificacion de errores.
+
+**b )**
+
+&nbsp;&nbsp;&nbsp;&nbsp;La relacion es que IP e ICMP trabajan juntos para permitir la comunicación entre dispositivos en una red. IP proporciona la funcionalidad básica de direccionamiento, empaquetado y enrutamiento de datos, mientras que ICMP proporciona retroalimentación y mensajes de control que ayudan a IP a lidiar con errores y problemas.
+Viaja dentro de IP ya que ICMP no transporta datos directos de usuario, se vale de el direccionamiento de IP.
+El receptor lo sabe gracias al campo Protocol (Protocolo) presente en el encabezado del paquete IPv4 (o el campo Next Header en IPv6). Cuando la capa de red del sistema receptor lee la cabecera IP, examina este campo de 8 bits que contiene un número estandarizado para identificar qué protocolo viene encapsulado dentro de la carga útil (payload); al detectar que el número es 1 (o 58 en el caso de IPv6), el sistema reconoce al instante que el contenido no pertenece a protocolos de transporte como TCP o UDP, sino que se trata de un mensaje de control o diagnóstico que debe ser derivado directamente al módulo ICMP para su procesamiento.
+
+
 **c )** 
+
 &nbsp;&nbsp;&nbsp;&nbsp;El ping comprueba que existe una comunicacion entre dos computadoras y mide el tiempo de respuesta. 
 * Echo Request: Mensaje emitido desde el origen para solicitar a otro dispositivo una respuesta que confirme su presencia y alcance.
 * Echo Reply: Es el mensaje de respuesta que se le da al origen luego de una Echo Request, verificando asi su presencia y su alcance.
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;El campo que permite diferenciar a el Echo Request y al Echo Reply es el Type de la cabecera del ICMP
 
 
 **d )** 
+
 &nbsp;&nbsp;&nbsp;&nbsp;Un mensaje ICMP contiene una cabecera de 64 bits, los cuales se dividen en:  
 * Tipo (8 bits): Especifica el tipo de mensaje ICMP.
 * Código (8 bits): Se usa para especificar parámetros del mensaje que se pueden codificar en uno o unos pocos bits.
@@ -72,9 +89,7 @@ Tabla de datos:
 | **Internet Control Message Protocol** | No tiene porque ICMP no usa direcciones ni puertos propios  | No tiene porque ICMP no usa direcciones ni puertos propios | ICMP no encapsula un protocolo de capa superior que se indique con un campo. Lo que sigue son los datos, y lo que define su interpretación es el campo Type |
 | **Datos/payload** | N/A | N/A | N/A. Son los datos en si. |
 
-![Texto alternativo](./foto.jpg)
 
-*Figura n: Leyenda de Imagen.*
 
 ---
 
