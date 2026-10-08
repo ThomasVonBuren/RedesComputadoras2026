@@ -23,8 +23,24 @@
 
 ---
 
-## 1) Punto
+## 1) 
+**c )** El ping comprueba que existe una comunicacion entre dos computadoras y mide el tiempo de respuesta. 
+* Echo Request: Mensaje emitido desde el origen para solicitar a otro dispositivo una respuesta que confirme su presencia y alcance.
+* Echo Reply: Es el mensaje de respuesta que se le da al origen luego de una Echo Request, verificando asi su presencia y su alcance.
 
+El campo que permite diferenciar a el Echo Request y al Echo Reply es el Type de la cabecera del ICMP
+
+
+**d )**
+
+Tabla de datos:
+
+| Capa | Dirección/identificador origen | Dirección/identificador destino | ¿Qué campo indica qué protocolo viene "adentro"? |
+| :--- | :--- | :--- | :--- |
+| **Ethernet II** |  |  |  |
+| **Internet Protocol Version 4** |  |  |  |
+| **Internet Control Message Protocol** |  |  |  |
+| **Datos/payload** |  |  |  |
 **a ) Apartado**
 
 ![Texto alternativo](./foto.jpg)
