@@ -90,7 +90,33 @@ Tabla de datos:
 | **Datos/payload** | N/A | N/A | N/A. Son los datos en si. |
 
 
+### Punto a)
 
+**Análisis de la dirección MAC destino y alcance de capa:**
+
+La dirección MAC destino del *Echo Request* enviado a `8.8.8.8` no es la dirección MAC del servidor de Google. En su lugar, corresponde a la dirección MAC del router local o puerta de enlace (`02:10:18:42:4e:04`). 
+
+Al comparar esta MAC destino con la trama del ping enviado a la dirección IP del gateway (`192.168.1.1`), se observa que en ambos casos la dirección de destino de Capa 2 es exactamente la misma (`02:10:18:42:4e:04`).
+
+* **Dirección MAC (Capa 2 - Enlace de Datos):** Posee un alcance estrictamente local. Las tramas Ethernet están delimitadas a la subred LAN y no pueden atravesar routers, por lo tanto, cualquier tráfico destinado a una red externa se encapsula dirigiendo la trama a la MAC de la puerta de enlace.
+* **Dirección IP (Capa 3 - Red):** Posee un alcance global / extremo a extremo (*end-to-end*). Permite que la dirección IP de destino (`8.8.8.8`) se mantenga inalterada a lo largo de todo el trayecto a través de Internet.
+
+### Punto b)
+
+**Comparación entre Echo Request (paquete 39758) y Echo Reply (paquete 39767):**
+
+* **Campos que cambian:**
+  * **Ethernet II:** Se invierten las direcciones MAC de origen y destino.
+  * **IPv4:** Se intercambian las direcciones IP de origen (`192.168.0.102`) y destino (`8.8.8.8`), se recalcula el *Header Checksum* y disminuye el campo *TTL*.
+  * **ICMP:** Cambia el campo *Type* (de `8` Request a `0` Reply) y se recalcula el *Checksum* de ICMP.
+
+* **Campos que se mantienen:**
+  * Se conservan la versión del protocolo (`IPv4`), la longitud del encabezado (*Header Length*), el *Identifier* (`id=0x0001`), el *Sequence Number* (`1075` ) y la carga útil o *Payload* (`32 bytes`).
+
+**Justificación de los campos:**
+
+* **Justificación de los cambios:** Invertir las direcciones en Ethernet e IP es indispensable para que el tráfico de respuesta sea encaminado de regreso al host emisor. El campo *Type* cambia para diferenciar funcionalmente una solicitud de una respuesta, lo que modifica el contenido del encabezado e invalida los checksums previos, obligando a su recalculación.
+* **Permanencia del Identificador y Número de Secuencia:** Permanecen idénticos para que la pila de protocolos del sistema operativo emisor pueda emparejar de forma unívoca cada respuesta recibida con su solicitud correspondiente, lo que permite calcular con precisión el tiempo de ida y vuelta (*RTT*).
 ---
 
 ## 2)
