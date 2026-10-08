@@ -24,8 +24,7 @@
 
 ---
 
-## 1) Punto
-
+## 1) 
 **a )**
 
 &nbsp;&nbsp;&nbsp;&nbsp;El protocolo de mensajes de control de Internet (ICMP) es un conjunto de reglas de comunicación que los dispositivos utilizan para comunicar errores de transmisión de datos en una red.
@@ -37,6 +36,60 @@ No lo hace de manera directa, pero si trabajan en conjunto, la principal diferen
 &nbsp;&nbsp;&nbsp;&nbsp;La relacion es que IP e ICMP trabajan juntos para permitir la comunicación entre dispositivos en una red. IP proporciona la funcionalidad básica de direccionamiento, empaquetado y enrutamiento de datos, mientras que ICMP proporciona retroalimentación y mensajes de control que ayudan a IP a lidiar con errores y problemas.
 Viaja dentro de IP ya que ICMP no transporta datos directos de usuario, se vale de el direccionamiento de IP.
 El receptor lo sabe gracias al campo Protocol (Protocolo) presente en el encabezado del paquete IPv4 (o el campo Next Header en IPv6). Cuando la capa de red del sistema receptor lee la cabecera IP, examina este campo de 8 bits que contiene un número estandarizado para identificar qué protocolo viene encapsulado dentro de la carga útil (payload); al detectar que el número es 1 (o 58 en el caso de IPv6), el sistema reconoce al instante que el contenido no pertenece a protocolos de transporte como TCP o UDP, sino que se trata de un mensaje de control o diagnóstico que debe ser derivado directamente al módulo ICMP para su procesamiento.
+
+
+**c )** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;El ping comprueba que existe una comunicacion entre dos computadoras y mide el tiempo de respuesta. 
+* Echo Request: Mensaje emitido desde el origen para solicitar a otro dispositivo una respuesta que confirme su presencia y alcance.
+* Echo Reply: Es el mensaje de respuesta que se le da al origen luego de una Echo Request, verificando asi su presencia y su alcance.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;El campo que permite diferenciar a el Echo Request y al Echo Reply es el Type de la cabecera del ICMP
+
+
+**d )** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Un mensaje ICMP contiene una cabecera de 64 bits, los cuales se dividen en:  
+* Tipo (8 bits): Especifica el tipo de mensaje ICMP.
+* Código (8 bits): Se usa para especificar parámetros del mensaje que se pueden codificar en uno o unos pocos bits.
+* Suma de comprobación (16 bits): Suma de comprobación del mensaje ICMP entero. Se utiliza el mismo algoritmo de suma de comprobación que en IP.
+* Parámetros (32 bits): Se usa para especificar parámetros más largos.
+
+![Texto alternativo](./fotos%20punto1/f.jpeg)
+
+*Figura 1 : Actividad en el grafico.*
+
+![Texto alternativo](./fotos%20punto1/e.jpeg)
+
+*Figura 2 : Ping al IP del gateway y al IP del Internet.*
+
+![Texto alternativo](./fotos%20punto1/d.jpeg)
+
+*Figura 3 : Deteccion de captura y aplicacion de filtro.*
+
+![Texto alternativo](./fotos%20punto1/a.jpeg)
+
+*Figura 4 : Panel de detalle del Echo Request de `Ethernet II`.*
+
+![Texto alternativo](./fotos%20punto1/b.jpeg)
+
+*Figura 5 : Panel de detalle del Echo Request de `IPv4`.*
+
+![Texto alternativo](./fotos%20punto1/c.jpeg)
+
+*Figura 6 : Panel de detalle del Echo Request de `ICMP` y `Data`.*
+
+Tabla de datos:
+
+| Capa | Dirección/identificador origen | Dirección/identificador destino | ¿Qué campo indica qué protocolo viene "adentro"? |
+| :--- | :--- | :--- | :--- |
+| **Ethernet II** | ASRockIncorp_c3:00:ed (70:85:c2:c3:00:ed) | MS-NLB-PhysServer-16_18:42:4e:04 (02:10:18:42:4e:04) | Type: IPv4 (0x0800) |
+| **Internet Protocol Version 4** | 192.168.0.102 | 192.168.1.1 | Protocol: ICMP (1) |
+| **Internet Control Message Protocol** | No tiene porque ICMP no usa direcciones ni puertos propios  | No tiene porque ICMP no usa direcciones ni puertos propios | ICMP no encapsula un protocolo de capa superior que se indique con un campo. Lo que sigue son los datos, y lo que define su interpretación es el campo Type |
+| **Datos/payload** | N/A | N/A | N/A. Son los datos en si. |
+
+
 
 ---
 
