@@ -25,20 +25,22 @@
 
 ## 1) Punto
 
-**a) Apartado**
+**a ) Apartado**
 
 ![Texto alternativo](./foto.jpg)
-*Figura 1: Leyenda de Imagen.*
+
+*Figura n: Leyenda de Imagen.*
 
 ---
 
 ## 2)
-**f)** Se generó tráfico ARP utilizando la opción A) proporcionada en la consigna.
+**f )** Se generó tráfico ARP utilizando la opción A) proporcionada en la consigna.
 
 ![Tráfico ARP](./TraficoARP.png)
+
 *Figura 1: Tráfico ARP utilizando la opción A).*
 
-Se adjunta también el .pca de la prueba. Titulado "tp5arp.pcapng" 
+Se adjunta también el .pca de la prueba. Titulado `tp5arp.pcapng`
 
 Tabla de datos:
 
@@ -54,23 +56,23 @@ Tabla de datos:
 
 Preguntas:
 
-**a)** 
+**a )**
 
 &nbsp;&nbsp;&nbsp;&nbsp;El Request va a una dirección broadcast porque el equipo emisor desconoce la dirección MAC física del host de destino en la red local. Así, todos los equipos de la subred reciben la request y comprueban si su IP es la consultada. El Reply no realiza esto ya que extrae la dirección MAC de origen y puede responder directamente.
 
 &nbsp;&nbsp;&nbsp;&nbsp;En el Request, Target MAC address se encuentra relleno de ceros (`00:00:00:00:00:00`). Esto se debe a que justamente se desconoce la dirección MAC de el receptor.
 
-**b)** 
+**b )**
 
 &nbsp;&nbsp;&nbsp;&nbsp;En el encabezado, el campo Type tiene el valor `0x0806`. No existe un encabezado IP porque el paquete de datos se transporta directamente dentro del payload. Como ARP se encapsula en `0x0806` y no requiere un encabezado IP, se trata de un protocolo que opera en la capa 2.
 
-**c)** 
+**c )**
 
 &nbsp;&nbsp;&nbsp;&nbsp;En la figura Tráfico ARP, aparecen 6 paquetes ARP Request. No hubo ningún Reply debido a que la IP utilizada (`192.168.0.253`) no se encontraba en uso en la subred local.
 
 &nbsp;&nbsp;&nbsp;&nbsp;No apareció ninún ICMP Echo Request. Esto se debe a que como no se obtuvo una dirección MAC a través de ARP, el paquete ICMP fue descartado.
 
-**d)** 
+**d )**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Cuando se vuelve a repetir el ping a un destino activo de la LAN, no vuelve a aparecer tráfico ARP. Esto es porque la asociación IP-MAC fue guardada previamente en la tabla de caché ARP del OS.
 
@@ -78,13 +80,98 @@ Preguntas:
 
 **Problemas de entradas viejas**: Si un equipo cambia su MAC o la IP se reasigna, los otros hosts van a conservar la entrada desactualizada en su caché. Esto va a causar que se continúen enviando paquetes a una MAC errónea o inexistente, provocando pérdida absoluta de paquetes y fallos en la conectividad.
 
-
 ---
 
 ## 3)
-
 
 ---
 
 ## 4)
 
+&nbsp;&nbsp;&nbsp;&nbsp;Establecer una conexión en TCP es un proceso mediante el cual dos extremos sincronizan el intercambio de datos. Emplean la negociación en tres pasos donde se inicializan las variables, se establecen parámetros, y se reserva memoria. En TCP la conexión existe en los extremos, los intermediarios solo ven los paquetes independientes de la sesión TCP. En UDP no existe una conexión y no hay negociación.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Un puerto es un identificador de 16 bits que utiliza la capa de transporte para dirigir el trafico de red entrante a una aplicación o proceso. El par (IP, Puerto) se conoce como socket. La dirección IP identifica a un dispositivo de forma única en la red, el puerto identifica el proceso dentro del dispositivo. De esta forma, su par identifica un punto final de comunicación especifico dentro de la red. Esto es indistinto de si empleamos TCP o UDP.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Que un proceso escuche un puerto se refiere a que dicho proceso solicita al sistema operativo que se reserve el número de puerto correspondiente y se espere llegada de trafico entrante. Se reserva mediante un `bind()` y queda a la espera mediante un `listen()`. Mientras está en `listen()` el SO guarda los paquetes dirigidos a ese puerto y le avisa al programa para procesar la conexión.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Comenzamos a hacer la captura de Wireshark en loopback en dos terminales.
+
+![Texto alternativo](./Punto4a.png)
+
+*Figura n: Terminal A UDP : Servidor.*
+
+![Texto alternativo](./Punto4b.png)
+
+*Figura n: Terminal B : Cliente.*
+
+![Texto alternativo](./Punto4c.png)
+
+*Figura n: Handshake SYN.*
+
+![Texto alternativo](./Punto4d.png)
+
+*Figura n: Handshake SYN, ACK.*
+
+![Texto alternativo](./Punto4e.png)
+
+*Figura n: Handshake ACK.*
+
+![Texto alternativo](./Punto4f.png)
+
+*Figura n: Paquete envio desde Terminal B.*
+
+![Texto alternativo](./Punto4g.png)
+
+*Figura n: Paquete recepción a Terminal A.*
+
+![Texto alternativo](./Punto4h.png)
+
+*Figura n: Paquete envio desde Terminal A.*
+
+![Texto alternativo](./Punto4i.png)
+
+*Figura n: Paquete recepción a Terminal B.*
+
+![Texto alternativo](./Punto4j.png)
+
+*Figura n: Paquete de finalización de sesión.*
+
+![Texto alternativo](./Punto4k.png)
+
+*Figura n: Paquete UDP envio B -> A.*
+
+![Texto alternativo](./Punto4n.png)
+
+*Figura n: Paquete UDP envio A -> B.*
+
+![Texto alternativo](./Punto4l.png)
+
+*Figura n: Terminal A UDP : Servidor.*
+
+![Texto alternativo](./Punto4m.png)
+
+*Figura n: Terminal B UDP : Cliente.*
+
+**a )**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Cuando se ejecuta el comando del cliente, antes de escribir se genera el handshake entre terminales: SYN / SYN-ACK / ACK. En UDP esto no ocurre.
+
+**b )**
+
+&nbsp;&nbsp;&nbsp;&nbsp;En UDP se genera 1 datagrama por línea de texto. No posee nada parecido a una ACK, no hay confirmación de recibo.
+
+**c )**
+
+&nbsp;&nbsp;&nbsp;&nbsp;En UDP los encabezados son de 8 bytes, 4 campos de 2 bytes: Puerto de origen, Puerto destino, Longitud total, y Checksum. En TCP con datos se tienen como mínimo 20 bytes: Origen y Destino de 2 bytes cada uno, Número de secuencia de 4 bytes, Número de confirmación de 4 bytes, Longitud cabecera + reservado + flags de 2 bytes, Control de créditos de 2 bytes, Checksum de 2 bytes, Puntero de urgencia de 2 bytes, y Opcional de 0 a 40 bytes.
+
+**d )**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Al cerrar la terminal B en UDP no se envia nada y el servidor no sabe que lo hicimos. En TCP se envía una secuencia de desconexión: teardown FIN, el servidor y el cliente realizan un handshake especial para terminar la sesión.
+
+**e )**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Para enviar la misma frase en UDP se precisa de 1 paquete. En TCP se emplean 8 a 9 paquetes: 3 de handshake, 1 con la frase, 1 de confirmación, 3-4 para terminar la conexión.
+
+**f )**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Al conectarnos a un servidor que no esta corriendo, con UDP la consola queda conectada y no figura nada en Wireshark, por lo que el cliente no sabe que el servidor no esta escuchando y nunca tendrá respuesta; al enviar un mensaje el mismo sistema operativo le indica que no existe la dirección como falla, y ahí cierra forzadamente. En TCP, se generan 5 requests para intentar conectarse y se cierra solo luego de no recibir respuesta. Se ve el uso del paquete RST al ser una desconexión abrupta. En UDP se requiere el uso de la capa de red, mientras que TCP puede resolverlo por si mismo en la capa de transporte.
