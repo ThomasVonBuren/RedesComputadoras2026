@@ -91,19 +91,76 @@ Tabla de datos:
 
 
 
-### Análisis de las capturas ICMP
+### Punto a)
 
-**c) Análisis del Payload de ping**
+**Análisis de la dirección MAC destino y alcance de capa:**
+
+La dirección MAC destino del Echo Request enviado a 8.8.8.8 no es la dirección MAC del servidor de Google. En su lugar, corresponde a la dirección MAC del router local o puerta de enlace (02:10:18:42:4e:04). 
+
+Al comparar esta MAC destino con la trama del ping enviado a la dirección IP del gateway (192.168.1.1), se observa que en ambos casos la dirección de destino de Capa 2 es exactamente la misma (02:10:18:42:4e:04).
+
+* **Dirección MAC (Capa 2 - Enlace de Datos):** Posee un alcance estrictamente local. Las tramas Ethernet están delimitadas a la subred LAN y no pueden atravesar routers, por lo tanto, cualquier tráfico destinado a una red externa se encapsula dirigiendo la trama a la MAC de la puerta de enlace.
+* **Dirección IP (Capa 3 - Red):** Posee un alcance global / extremo a extremo (end-to-end). Permite que la dirección IP de destino (8.8.8.8) se mantenga inalterada a lo largo de todo el trayecto a través de Internet.
+
+### Punto b)
+
+**Comparación entre Echo Request (paquete 39758) y Echo Reply (paquete 39767):**
+
+* **Campos que cambian:**
+  * **Ethernet II:** Se invierten las direcciones MAC de origen y destino.
+  * **IPv4:** Se intercambian las direcciones IP de origen (192.168.0.102) y destino (8.8.8.8), se recalcula el Header Checksum y disminuye el campo TTL.
+  * **ICMP:** Cambia el campo Type (de 8 Request a 0 Reply) y se recalcula el Checksum de ICMP.
+
+* **Campos que se mantienen:**
+  * Se conservan la versión del protocolo (IPv4), la longitud del encabezado (Header Length), el Identifier (id=0x0001), el Sequence Number (1075 ) y la carga útil o Payload (32 bytes).
+
+**Justificación de los campos:**
+
+* **Justificación de los cambios:** Invertir las direcciones en Ethernet e IP es indispensable para que el tráfico de respuesta sea encaminado de regreso al host emisor. El campo "Type" cambia para diferenciar funcionalmente una solicitud de una respuesta, lo que modifica el contenido del encabezado e invalida los checksums previos, obligando a su recalculación.
+* **Permanencia del Identificador y Número de Secuencia:** Permanecen idénticos para que la pila de protocolos del sistema operativo emisor pueda emparejar de forma unívoca cada respuesta recibida con su solicitud correspondiente, lo que permite calcular con precisión el tiempo de ida y vuelta (RTT).
+**Punto c) Análisis del Payload de ping**
 
 El payload del comando ping está dentro del mensaje ICMP, en el campo Data. En la captura se puede ver que ocupa 32 bytes y tiene una secuencia repetitiva de caracteres alfabéticos. Este contenido se mantiene igual en el Echo Reply, porque el receptor debe devolver los mismos datos que recibió en el Echo Request.
 En Windows, ping suele utilizar 32 bytes de datos, mientras que en Linux suelen utilizar 56 bytes, pudiendo incluir marcas de tiempo. Esto demuestra que el protocolo ICMP no establece un contenido ni un tamaño fijo para los datos de prueba, sino que estos dependen de la implementación del sistema operativo.
 
-**d) Análisis del TTL**
+**Punto d) Análisis del TTL**
 
 En el Echo Request enviado hacia 8.8.8.8 se puede ver un valor de TTL = 128, mientras que el Echo Reply recibido presenta un valor de TTL = 116.
 Esta diferencia se debe que el TTL es un campo del encabezado IPv4, que disminuye en una unidad cada vez que un router reenvía el paquete. Cuando el TTL llega a cero, el paquete se descarta, evitando que circule indefinidamente por la red.
 Es importante aclarar que el Echo Request y el Echo Reply son paquetes diferentes, generados por dispositivos distintos, por lo que pueden tener diferentes valores iniciales de TTL.
 Por eso, no es posible determinar la cantidad exacta de routers atravesados por el Echo Reply simplemente realizando la resta `128 - 116`, ya que se desconoce el TTL inicial utilizado por el servidor de destino.
+
+### Punto e)
+
+```mermaid
+graph TD
+    subgraph Frame["FRAME / TRAMA ETHERNET (74 bytes)"]
+        direction LR
+        
+        Ethernet["ETHERNET II HEADER<br/>(14 bytes)"]
+        
+        subgraph IP["PAQUETE IPv4 (60 bytes)"]
+            direction LR
+            
+            IPHeader["IP HEADER<br/>(20 bytes)"]
+            
+            subgraph ICMP["MENSAJE ICMP (40 bytes)"]
+                direction LR
+                
+                ICMPHeader["ICMP HEADER<br/>(8 bytes)"]
+                Payload["PAYLOAD / DATA<br/>(32 bytes)"]
+            end
+        end
+    end
+
+    style Frame fill:#e2e8f0,stroke:#1e293b,stroke-width:2px,color:#000000
+    style IP fill:#cbd5e1,stroke:#1e293b,stroke-width:2px,color:#000000
+    style ICMP fill:#94a3b8,stroke:#1e293b,stroke-width:2px,color:#000000
+    style Ethernet fill:#475569,color:#ffffff
+    style IPHeader fill:#334155,color:#ffffff
+    style ICMPHeader fill:#1e293b,color:#ffffff
+    style Payload fill:#0f172a,color:#ffffff
+```
 
 ---
 
