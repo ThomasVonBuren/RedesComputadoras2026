@@ -165,6 +165,27 @@ graph TD
 ---
 
 ## 2)
+**a )** ¿Qué problema resuelve ARP? ¿En qué capa lo ubicarían y por qué es discutible?
+Se encarga de traducir una dirección IP a la dirección MAC física correspondiente dentro de la misma red local, discuteiendo un poco en que capa lo ubicariamos, llegamos a la conclusion que opera en capa de enlace, pero conceptualmente conecta información de las dos capas
+resuelve algo relacionado a direcciones IP pero el mensaje ARP  viaja directo encapsulado en una trama Ethernet por eso concluimos que entre la 2 y la 3
+
+**b )** ¿Qué es un ARP Request y un ARP Reply? ¿A quién se envía cada uno?
+ARP Request es el mensaje que manda un host preguntando, quien tiene ess IP y vpidiendo la MAC se manda en broadcast, a toda la red, por wue no sabe a quien mandarselo
+mientras que el ARP Reply es la respuesta del dueño de la IP, informando su MAC entonces manda unicast al que pregunto
+
+**c )** ¿Qué es la caché ARP y por qué existe?
+Para no mandar un Request en broadcast cada vez que se quiere comunicar con la misma IP se crea la caché ARP, es como una tabla con las asociaciones IP con MAC
+
+**d )** Traten de responder con sus palabras: "Tengo la IP de una máquina de mi red local. ¿Cómo sé a qué dirección MAC debo enviarle la trama?"
+Me fijo si la tengo en el cahe,si la tengo uso directamente esa MAC, si no la tengo mando un ARP Request en broadcast preguntando quién tiene esa IP y cuando me responda la guardo en la caché y armo la trama con esa MAC de destino
+
+**e )**  Ver la caché ARP de su computadora y buscar la entrada del gateway:
+MAC del arp -a: 3c-6a-d2-e8-25-58
+MAC destino en el Echo Request capturado con Wireshark: TPLink_e8:25:58 (3c:6a:d2:e8:25:58)
+Estan las capturas en la carpeta RedesComputadoras2026\LaboratorioN5\Capturas Punto 2e)
+y concluimos que la MAC asociada al gateway en la caché ARP coincide con la MAC destino de la trama Ethernet, porque es la misma dirección que la compu tenía guardada
+( aca en este punto e) la captura del punto 1 la subio, otro integrante del grupo, por eso no es comparable directamente con la caché ARP de esta computadora, para demostrar la captura del ping al gateway en la misma red donde verficamos
+ la caché ARP (192.168.68.0/24), confirmando que la MAC asociada al gateway (3c:6a:d2:e8:25:58) coincide con la MAC destino observada en la trama Ethernet )
 **f )** Se generó tráfico ARP utilizando la opción A) proporcionada en la consigna.
 
 ![Tráfico ARP](./TraficoARP.png)
