@@ -91,6 +91,20 @@ Tabla de datos:
 
 
 
+### Análisis de las capturas ICMP
+
+**c) Análisis del Payload de ping**
+
+El payload del comando ping está dentro del mensaje ICMP, en el campo Data. En la captura se puede ver que ocupa 32 bytes y tiene una secuencia repetitiva de caracteres alfabéticos. Este contenido se mantiene igual en el Echo Reply, porque el receptor debe devolver los mismos datos que recibió en el Echo Request.
+En Windows, ping suele utilizar 32 bytes de datos, mientras que en Linux suelen utilizar 56 bytes, pudiendo incluir marcas de tiempo. Esto demuestra que el protocolo ICMP no establece un contenido ni un tamaño fijo para los datos de prueba, sino que estos dependen de la implementación del sistema operativo.
+
+**d) Análisis del TTL**
+
+En el Echo Request enviado hacia 8.8.8.8 se puede ver un valor de TTL = 128, mientras que el Echo Reply recibido presenta un valor de TTL = 116.
+Esta diferencia se debe que el TTL es un campo del encabezado IPv4, que disminuye en una unidad cada vez que un router reenvía el paquete. Cuando el TTL llega a cero, el paquete se descarta, evitando que circule indefinidamente por la red.
+Es importante aclarar que el Echo Request y el Echo Reply son paquetes diferentes, generados por dispositivos distintos, por lo que pueden tener diferentes valores iniciales de TTL.
+Por eso, no es posible determinar la cantidad exacta de routers atravesados por el Echo Reply simplemente realizando la resta `128 - 116`, ya que se desconoce el TTL inicial utilizado por el servidor de destino.
+
 ---
 
 ## 2)
