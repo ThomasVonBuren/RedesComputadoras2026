@@ -169,7 +169,7 @@ graph TD
 
 ![Tráfico ARP](./TraficoARP.png)
 
-*Figura 1: Tráfico ARP utilizando la opción A).*
+*Figura 7: Tráfico ARP utilizando la opción A).*
 
 Se adjunta también el .pca de la prueba. Titulado `tp5arp.pcapng`
 
@@ -229,59 +229,59 @@ Preguntas:
 
 ![Texto alternativo](./Punto4a.png)
 
-*Figura n: Terminal A UDP : Servidor.*
+*Figura 8: Terminal A UDP : Servidor.*
 
 ![Texto alternativo](./Punto4b.png)
 
-*Figura n: Terminal B : Cliente.*
+*Figura 9: Terminal B : Cliente.*
 
 ![Texto alternativo](./Punto4c.png)
 
-*Figura n: Handshake SYN.*
+*Figura 10: Handshake SYN.*
 
 ![Texto alternativo](./Punto4d.png)
 
-*Figura n: Handshake SYN, ACK.*
+*Figura 11: Handshake SYN, ACK.*
 
 ![Texto alternativo](./Punto4e.png)
 
-*Figura n: Handshake ACK.*
+*Figura 12: Handshake ACK.*
 
 ![Texto alternativo](./Punto4f.png)
 
-*Figura n: Paquete envio desde Terminal B.*
+*Figura 13: Paquete envio desde Terminal B.*
 
 ![Texto alternativo](./Punto4g.png)
 
-*Figura n: Paquete recepción a Terminal A.*
+*Figura 14: Paquete recepción a Terminal A.*
 
 ![Texto alternativo](./Punto4h.png)
 
-*Figura n: Paquete envio desde Terminal A.*
+*Figura 15: Paquete envio desde Terminal A.*
 
 ![Texto alternativo](./Punto4i.png)
 
-*Figura n: Paquete recepción a Terminal B.*
+*Figura 16: Paquete recepción a Terminal B.*
 
 ![Texto alternativo](./Punto4j.png)
 
-*Figura n: Paquete de finalización de sesión.*
+*Figura 17: Paquete de finalización de sesión.*
 
 ![Texto alternativo](./Punto4k.png)
 
-*Figura n: Paquete UDP envio B -> A.*
+*Figura 18: Paquete UDP envio B -> A.*
 
 ![Texto alternativo](./Punto4n.png)
 
-*Figura n: Paquete UDP envio A -> B.*
+*Figura 19: Paquete UDP envio A -> B.*
 
 ![Texto alternativo](./Punto4l.png)
 
-*Figura n: Terminal A UDP : Servidor.*
+*Figura 20: Terminal A UDP : Servidor.*
 
 ![Texto alternativo](./Punto4m.png)
 
-*Figura n: Terminal B UDP : Cliente.*
+*Figura 21: Terminal B UDP : Cliente.*
 
 **a )**
 
@@ -306,3 +306,31 @@ Preguntas:
 **f )**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Al conectarnos a un servidor que no esta corriendo, con UDP la consola queda conectada y no figura nada en Wireshark, por lo que el cliente no sabe que el servidor no esta escuchando y nunca tendrá respuesta; al enviar un mensaje el mismo sistema operativo le indica que no existe la dirección como falla, y ahí cierra forzadamente. En TCP, se generan 5 requests para intentar conectarse y se cierra solo luego de no recibir respuesta. Se ve el uso del paquete RST al ser una desconexión abrupta. En UDP se requiere el uso de la capa de red, mientras que TCP puede resolverlo por si mismo en la capa de transporte.
+
+---
+
+&nbsp;&nbsp;&nbsp;&nbsp;Realizamos ahora las instrucciónes propuestas con los script cargados en el archivo para completar la siguiente tabla:
+
+![Texto alternativo](./Punto4o.png)
+
+*Figura 22: Terminal A : Inicialización servidor.*
+
+![Texto alternativo](./Punto4p.png)
+
+*Figura 23: Terminal B : Enviar mensaje cliente.*
+
+![Texto alternativo](./Punto4q.png)
+
+*Figura 24: Wireshark : Todos los paquetes generados. Notar el Handshake SYN;ACK, el Push PSH, y el Cierre FIN*
+
+| Llamada a la API | ¿Dónde se ejecuta? | ¿Genera tráfico en la red? | Segmentos observados en Wireshark (Flags y descripción) |
+| :--- | :--- | :--- | :--- |
+| **`socket()`** | Ambos | No | Operación puramente local que reserva descriptores y recursos en la pila de red del SO. No se ve en WS. |
+| **`bind()`** | Servidor | No | Registra localmente en el SO la dirección IP y el puerto asociados al socket, por lo que no se ve en WS. |
+| **`listen()`** | Servidor | No | Ninguno ya que modifica el estado del socket a LISTEN para aceptar paquetes `SYN` entrantes. |
+| **`connect()`** | Cliente | Sí | Three-Way Handshake:<br>1. `[SYN]` Cliente -> Servidor<br>2. `[SYN, ACK]` Servidor -> Cliente<br>3. `[ACK]` Cliente -> Servidor |
+| **`accept()`** | Servidor | No | Retorna un nuevo socket extrayendo la conexión ya establecida previa por el SO tras el handshake, por lo que no se ve. |
+| **`sendall()`** | Ambos | Sí | Segmento con datos: `[PSH, ACK]` con el contenido del mensaje. |
+| **`recv()`** | Ambos | Sí| Lee datos del buffer local. La recepción activa la devolución automática de una confirmación `[ACK]`. |
+| **`close()`** | Ambos | Sí | Cierre TCP :<br>1. `[FIN, ACK]` enviado por quien inicia el cierre<br>2. `[ACK]` de confirmación del otro extremo<br>3. `[FIN, ACK]` del otro extremo<br>4. `[ACK]` de confirmación final |
+
