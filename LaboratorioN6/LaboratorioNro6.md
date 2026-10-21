@@ -100,22 +100,24 @@
 
 **b) Verificación eléctrica con tester**
 
-![Texto alternativo](./fotos%20parte1/tester.jpeg)
+![Texto alternativo](./imagenes/punto%203b.jpeg)
 
 *Figura 5: Verificación con tester de cables Ethernet.*
 
+En esta imagen se verifica como el primer cable esta armado de forma correcta, asi como se ve en esta imagen se ven el testeo con los demas cables. 
+
 | Pin | LED tester (extremo local) | LED tester (extremo remoto) | ¿Continuidad correcta? |
 | :--- | :--- | :--- | :--- |
-| 1 | *[ ]* | *[ ]* | *[ ]* |
-| 2 | *[ ]* | *[ ]* | *[ ]* |
-| 3 | *[ ]* | *[ ]* | *[ ]* |
-| 4 | *[ ]* | *[ ]* | *[ ]* |
-| 5 | *[ ]* | *[ ]* | *[ ]* |
-| 6 | *[ ]* | *[ ]* | *[ ]* |
-| 7 | *[ ]* | *[ ]* | *[ ]* |
-| 8 | *[ ]* | *[ ]* | *[ ]* |
+| 1 | *Encendido* | *Encendido* | *Correcto* |
+| 2 | *Encendido* | *Encendido* | *Correcto* |
+| 3 | *Encendido* | *Encendido* | *Correcto* |
+| 4 | *Encendido* | *Encendido* | *Correcto* |
+| 5 | *Encendido* | *Encendido* | *Correcto* |
+| 6 | *Encendido* | *Encendido* | *Correcto* |
+| 7 | *Encendido* | *Encendido* | *Correcto* |
+| 8 | *Encendido* | *Encendido* | *Correcto* |
 
-**Conclusión de la verificación:** *[¿El cable es apto? ¿Se detectaron fallas (cortos, abiertos, pares cruzados)? ¿Qué se corregiría?]*
+**Conclusión de la verificación:** *El cable que intercambiamos resulto ser apto, no se detecto ningun tipo de falla y el testeo del mismo resulto correcto.*
 
 ---
 
@@ -208,25 +210,11 @@
 
 ### 2) Conexión al switch y prueba con ping
 
-&nbsp;&nbsp;&nbsp;&nbsp;*[Indicar grupos que compartieron switch, puertos utilizados y estado de los LEDs.]*
+Conectamos los cables que armamos a un switch y mandamos el ping a la IP del grupo con el cual realizamos esta parte.
 
-```mermaid
-graph TD
-    SW["Switch Cisco Catalyst 2950"]
-    PC1["PC Grupo A<br/>IP: [ ]"]
-    PC2["PC Grupo B<br/>IP: [ ]"]
-    PC3["PC Grupo C (opcional)<br/>IP: [ ]"]
+![Texto alternativo](./imagenes/punto%202.jpeg)
 
-    PC1 -- "Fa0/[ ]" --- SW
-    PC2 -- "Fa0/[ ]" --- SW
-    PC3 -- "Fa0/[ ]" --- SW
-```
-
-*Figura 11: Topología de la LAN armada (completar IPs y puertos).*
-
-![Texto alternativo](./fotos%20parte2/ping_lan.png)
-
-*Figura 12: Ping exitoso hacia la PC de otro grupo.*
+*Figura 11: Ping exitoso hacia la PC de otro grupo.*
 
 ---
 
@@ -283,7 +271,7 @@ Se adjunta también el .pcapng de la prueba, titulado `[nombre_archivo].pcapng`.
 
 **b) ¿Existe algún mecanismo de confirmación de recepción equivalente a los ACK de TCP?**
 
-&nbsp;&nbsp;&nbsp;&nbsp;*[Respuesta.]*
+&nbsp;&nbsp;&nbsp;&nbsp; No, en este protocolo (UDP) no se posee ningún mecanismo de confirmación del estilo ACK, el mismo es un protocolo no orientado a la conexión y no confiable, es decir, envia la información sin confirmar que fue recibida o si se produjo algun conflicto en el camino.
 
 **c) ¿Qué ocurre si se envían mensajes mientras el receptor UDP no está ejecutándose?**
 
@@ -295,8 +283,7 @@ Se adjunta también el .pcapng de la prueba, titulado `[nombre_archivo].pcapng`.
 
 **d) ¿UDP garantiza que los mensajes lleguen en el mismo orden en que fueron enviados?**
 
-&nbsp;&nbsp;&nbsp;&nbsp;*[Respuesta.]*
-
+&nbsp;&nbsp;&nbsp;&nbsp;No, UDP no garantiza que los mensajes lleguen en el mismo orden en que fueron enviados. Cada transmisión se trata de forma independiente, como cada paquete puede seguir una ruta diferente dentro de la red, no existe garantía de que lleguen ordenados, que no se dupliquen o incluso de que lleguen a destino. Además, la cabecera de UDP no incluye números de secuencia para que el receptor pueda reordenarlos.
 **e) ¿Qué aplicaciones reales utilizan UDP y por qué?**
 
 &nbsp;&nbsp;&nbsp;&nbsp;*[Respuesta: ejemplos (DNS, VoIP, streaming, juegos online, DHCP, etc.) y justificación.]*
