@@ -26,35 +26,43 @@
 # PARTE 1: Taller de armado y verificación de cables Cat5/Cat5e (T568A/B)
 
 ## 1) Pasos para crimpar un cable derecho (no cruzado)
+**Procedimiento de armado (Norma T568B)**
 
-&nbsp;&nbsp;&nbsp;&nbsp;*[Breve introducción: qué es un cable de par trenzado Cat5/Cat5e, qué es la norma T568A/T568B y qué significa un cable "derecho" (mismo estándar en ambos extremos) frente a uno cruzado.]*
+Para la construcción del cable de red directo, se seleccionó la norma **T568B** en ambos extremos del cable. El procedimiento consistió en los siguientes pasos:
+
+1. **Deschaquetado:** Se retiraron aproximadamente 2 cm de la cubierta exterior de PVC del cable UTP sin dañar el aislamiento de los pares trenzados internos.
+2. **Destrenzado y ordenamiento:** Se destrenzaron los pares y se ordenaron según el código de colores de la norma elegida:
+   * **T568B:** Blanco/Naranja, Naranja, Blanco/Verde, Azul, Blanco/Azul, Verde, Blanco/Marrón, Marrón.
+3. **Alineación y corte:** Se alinearon los hilos en un mismo plano, rectificándolos y recortándolos en línea recta a aproximadamente 1.2 cm para asegurar que ingresen parejos al conector.
+4. **Inserción y crimpado:** Se introdujeron los hilos firmemente dentro del conector RJ-45 asegurando que cada conductor llegara hasta el fondo de su canal correspondiente y que la cubierta exterior quedara dentro de la lengüeta de retención del conector. Se utilizó la pinza crimpeadora para fijar los contactos metálicos y el sujetador de la chaqueta.
+
 
 **Herramientas y materiales utilizados:**
 
-* *[Cable Cat5/Cat5e, conectores RJ-45, pinza crimpeadora, pelacables, tester, etc.]*
+* Cable Cat5/Cat5e, conectores RJ-45, pinza crimpeadora, pelacables y un tester de cable de red. 
 
-**Orden de colores (norma elegida: T568A / T568B — indicar cuál):**
+**Orden de colores (norma: T568B):**
 
-| Pin | Color del par (T568B) | Color del par (T568A) |
-| :--- | :--- | :--- |
-| 1 | Blanco/Naranja | Blanco/Verde |
-| 2 | Naranja | Verde |
-| 3 | Blanco/Verde | Blanco/Naranja |
-| 4 | Azul | Azul |
-| 5 | Blanco/Azul | Blanco/Azul |
-| 6 | Verde | Naranja |
-| 7 | Blanco/Marrón | Blanco/Marrón |
-| 8 | Marrón | Marrón |
+| Pin | Color del par (T568B) |
+| :--- | :--- |
+| 1 | Blanco/Naranja |
+| 2 | Naranja |
+| 3 | Blanco/Verde |
+| 4 | Azul |
+| 5 | Blanco/Azul |
+| 6 | Verde | 
+| 7 | Blanco/Marrón |
+| 8 | Marrón |
 
 **Procedimiento paso a paso:**
 
-1. *[Pelar la cubierta exterior (~2-3 cm).]*
-2. *[Separar y destrenzar los pares.]*
-3. *[Ordenar los hilos según la norma elegida.]*
-4. *[Cortar a ras y emparejar los hilos.]*
-5. *[Insertar en el conector RJ-45 (clip hacia abajo), verificando que lleguen al fondo.]*
-6. *[Crimpar.]*
-7. *[Repetir en el otro extremo con la MISMA norma.]*
+1. Pelar la cubierta exterior 2-3 cm aprox.
+2. Separar y destrenzar los pares.
+3. Ordenar los hilos según la norma elegida.
+4. Cortar a ras y emparejar los hilos.
+5. Insertar en el conector RJ-45, verificar que lleguen al fondo.
+6. Apretar el conector.
+7. Repetir en el otro extremo con la misma norma.
 
 *Fuente(s) consultada(s): [videos / tutoriales utilizados]*
 
@@ -62,41 +70,42 @@
 
 ## 2) Construcción del cable
 
-&nbsp;&nbsp;&nbsp;&nbsp;*[Describir el cable construido por el grupo: longitud, norma utilizada, tipo (derecho), dificultades encontradas.]*
+* **Longitud:** Aproximadamente 1,5 metros.
+* **Norma utilizada:** T568B en ambos extremos.
+* **Tipo de cable:** Cable de parcheo directo (patch cord / no cruzado).
+* **Dificultades encontradas:** Al momento de ordenar los pares de hilos, algunos conductores tendían a entrelazarse o cruzarse de posición al insertarlos dentro del conector. 
 
-![Texto alternativo](./fotos%20parte1/cable_construccion.jpeg)
+<img width="1600" height="900" alt="b87b2242-f019-4155-9d86-28a6082a8618" src="https://github.com/user-attachments/assets/5fbf3aa8-2a90-4200-9816-290cc8f9e859" />
 
-*Figura 1: Proceso de armado del cable.*
-
-![Texto alternativo](./fotos%20parte1/cable_terminado.jpeg)
-
-*Figura 2: Cable terminado (ambos extremos).*
+Figura 1: Cable terminado (ambos extremos).
 
 ---
 
 ## 3) Verificación del cable
 
-&nbsp;&nbsp;&nbsp;&nbsp;*[Indicar qué grupo intercambió cables con el nuestro (ver punto 4).]*
+Los cables que verificamos son del grupo MacacOS.
 
 **a) Inspección visual**
 
-![Texto alternativo](./fotos%20parte1/inspeccion_1.jpeg)
+<img width="1200" height="1600" alt="dfd10adf-bba6-4403-b463-3600678c3f90" src="https://github.com/user-attachments/assets/659d4d7a-4982-4107-a45e-b0249f566366" />
 
-*Figura 3: Inspección visual del cable del otro grupo — extremo A.*
 
-![Texto alternativo](./fotos%20parte1/inspeccion_2.jpeg)
+*Figura 2: Inspección visual del cable del otro grupo — extremo A.*
 
-*Figura 4: Inspección visual del cable del otro grupo — extremo B.*
+<img width="1200" height="1600" alt="599584be-0097-4c97-bf57-edd9025d3043" src="https://github.com/user-attachments/assets/a22a9263-2e84-4354-bca1-42ad133c53a0" />
+
+
+*Figura 3: Inspección visual del cable del otro grupo — extremo B.*
 
 | Aspecto evaluado | ¿Bien / Mal? | Justificación |
 | :--- | :--- | :--- |
-| Orden de colores correcto según norma | *[ ]* | *[ ]* |
-| Los 8 hilos llegan hasta el fondo del conector | *[ ]* | *[ ]* |
-| La cubierta exterior ingresa en el conector (alivio de tensión) | *[ ]* | *[ ]* |
-| Longitud de destrenzado (no excesiva) | *[ ]* | *[ ]* |
-| Crimpado correcto (contactos hundidos, sin hilos sueltos) | *[ ]* | *[ ]* |
-| Estado general del conector y del cable | *[ ]* | *[ ]* |
-| Ambos extremos con la misma norma | *[ ]* | *[ ]* |
+| Orden de colores correcto según norma | *Bien* | *Segun la norma T568B, el orden de los colores es el correcto* |
+| Los 8 hilos llegan hasta el fondo del conector | *Bien* | *Se podia apreciar como los 8 hilos llegaban hacia el fondo* |
+| La cubierta exterior ingresa en el conector (alivio de tensión) | *Mal* | *En un extremo se ve como la cubierta exterior ingresa, pero en otro extremo se nota como no * |
+| Longitud de destrenzado (no excesiva) | *Bien* | *La longitud de destrenzado era la adecuada* |
+| Crimpado correcto | *Bien* | *En la verificacion, se podia apreciar contactos hundidos y no se vio ningun hilo suelto* |
+| Estado general del conector y del cable | *Bien* | *El conector parecia firme, y el cable no parecia estar en mal estado. El cable paso la verificacion por tester* |
+| Ambos extremos con la misma norma | *Si* | *La norma que utilizaron fue: T568B* |
 
 **b) Verificación eléctrica con tester**
 
@@ -256,20 +265,19 @@ ncat -u [IP_receptor] 5000
 
 ### 4) Captura de paquetes UDP con Wireshark
 
-![Texto alternativo](./fotos%20parte2/wireshark_udp.png)
+<img width="1366" height="768" alt="9d12b745-9759-4f96-8ca4-1dd777b360ba" src="https://github.com/user-attachments/assets/daa7bce6-b239-4a23-98e3-6f2882a2e9ab" />
+
+
 
 *Figura 15: Captura general del tráfico UDP.*
 
-![Texto alternativo](./fotos%20parte2/wireshark_udp_detalle.png)
-
-*Figura 16: Detalle de un datagrama UDP (Ethernet / IPv4 / UDP / Data).*
 
 | Capa | Origen | Destino | Campo relevante |
 | :--- | :--- | :--- | :--- |
-| **Ethernet II** | *[ ]* | *[ ]* | Type: *[ ]* |
-| **IPv4** | *[ ]* | *[ ]* | Protocol: UDP (17) |
-| **UDP** | Puerto: *[ ]* | Puerto: 5000 | Length: *[ ]* / Checksum: *[ ]* |
-| **Datos** | N/A | N/A | *[Contenido del mensaje]* |
+| **Ethernet II** | *b0:66:80 (f4:39:09:b0:66:80)* | *00:22:70:68:00:00* | Type: *IPv4 (0x0800)* |
+| **IPv4** | *192.168.1.10* | *192.168.1.110* | Protocol: UDP (17) |
+| **UDP** | Puerto: *50179* | Puerto: 5000 | Length: *14*  |
+| **Datos** | N/A | N/A | *hola\n (6 bytes)* |
 
 Se adjunta también el .pcapng de la prueba, titulado `[nombre_archivo].pcapng`.
 
