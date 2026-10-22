@@ -36,38 +36,17 @@ Para la construcción del cable de red directo, se seleccionó la norma **T568B*
 3. **Alineación y corte:** Se alinearon los hilos en un mismo plano, rectificándolos y recortándolos en línea recta a aproximadamente 1.2 cm para asegurar que ingresen parejos al conector.
 4. **Inserción y crimpado:** Se introdujeron los hilos firmemente dentro del conector RJ-45 asegurando que cada conductor llegara hasta el fondo de su canal correspondiente y que la cubierta exterior quedara dentro de la lengüeta de retención del conector. Se utilizó la pinza crimpeadora para fijar los contactos metálicos y el sujetador de la chaqueta.
 
+&nbsp;&nbsp;&nbsp;&nbsp;Para crimpar un cable derecho pimero elegiremos utilizar la norma T568B la cual es un estandar para la construccion de cables y sigue el siguiente codigo de color de izquierda a derecha:
+* PIN 1 BLANCO / NARANJA
+* PIN 2 NARANJA
+* PIN 3 BLANCO / VERDE
+* PIN 4 AZUL
+* PIN 5 BLANCO / AZUL
+* PIN 6 VERDE
+* PIN 7 BLANCO / MARRON
+* PIN 8 MARRON
 
-**Herramientas y materiales utilizados:**
-
-* Cable Cat5/Cat5e, conectores RJ-45, pinza crimpeadora, pelacables y un tester de cable de red. 
-
-**Orden de colores (norma: T568B):**
-
-| Pin | Color del par (T568B) |
-| :--- | :--- |
-| 1 | Blanco/Naranja |
-| 2 | Naranja |
-| 3 | Blanco/Verde |
-| 4 | Azul |
-| 5 | Blanco/Azul |
-| 6 | Verde | 
-| 7 | Blanco/Marrón |
-| 8 | Marrón |
-
-**Procedimiento paso a paso:**
-
-1. Pelar la cubierta exterior 2-3 cm aprox.
-2. Separar y destrenzar los pares.
-3. Ordenar los hilos según la norma elegida.
-4. Cortar a ras y emparejar los hilos.
-5. Insertar en el conector RJ-45, verificar que lleguen al fondo.
-6. Apretar el conector.
-7. Repetir en el otro extremo con la misma norma.
-
-*Fuente(s) consultada(s): [videos / tutoriales utilizados]*
-
----
-
+Luego, utilizando unas pinzas crimpadoras cortamos aproximadamente 2 cm de la cubierta exterior del cable con cuidado de no dañar los filamentos internos. Proximamente desenredamos y separamos los 4 pares trenzados alisandolos para facilitar la organizacion. Organizamos segun el codigo de color elegido previamente. Nuevamente con la crimpadora realizamos un corte recto y uniforme dejando suelto aproximadamente 1.5 cm de cable. Insertamos en el RJ45 de manera que cada cable pase por su carril y que lleguen hasta el fondo del conector, proximamente introducimos el conector en la cavidad de la crimpadora y apretamos para que el seguro de plastico fije los cables. Por ultimo, repetimos los pasos desde el otro extremo. 
 ## 2) Construcción del cable
 
 * **Longitud:** Aproximadamente 1,5 metros.
@@ -146,69 +125,19 @@ El intercambio de cables se realizó con MacacOS. Recibimos el cable construido 
 
 # PARTE 2: Equipamiento físico, verificación y utilización de equipos de red y generación de tráfico
 
-## Opcional
-
-### 1) Características principales del switch Cisco Catalyst 2950
-
-*[Resumen basado en el datasheet: cantidad y velocidad de puertos, capacidad de conmutación, tabla MAC, soporte de VLANs, puerto consola, etc.]*
-
-| Característica | Valor |
-| :--- | :--- |
-| Modelo | Cisco Catalyst 2950 Series |
-| Puertos | *[ ]* |
-| Velocidad de los puertos | *[ ]* |
-| Capacidad de conmutación | *[ ]* |
-| Tamaño de tabla MAC | *[ ]* |
-| Otras | *[ ]* |
-
-![Texto alternativo](./fotos%20parte2/switch_frontal.jpeg)
-
-*Figura 7: Panel frontal del switch (indicadores y puertos).*
-
-![Texto alternativo](./fotos%20parte2/switch_trasero.jpeg)
-
-*Figura 8: Panel trasero del switch (alimentación, puerto de consola).*
-
-### 2) Checklists de procedimientos
-
-**a) Conexión a la consola del switch (PuTTY, 9600 baudios)**
-
-- [ ] *[Conectar cable serie/RJ-45 al puerto consola del switch.]*
-- [ ] *[Conectar el adaptador serie-USB a la PC e identificar el puerto COM en el Administrador de dispositivos.]*
-- [ ] *[Abrir PuTTY → Serial → COMx → Speed: 9600.]*
-- [ ] *[Verificar acceso al prompt del switch.]*
-
-![Texto alternativo](./fotos%20parte2/putty.png)
-
-*Figura 9: Acceso a la consola del switch mediante PuTTY.*
-
-**b) Administración del switch y habilitación de interfaces**
-
-- [ ] *[enable]*
-- [ ] *[configure terminal]*
-- [ ] *[interface fastEthernet 0/X]*
-- [ ] *[no shutdown]*
-- [ ] *[end / show interfaces status]*
-
-```
-(Pegar aquí la salida de consola relevante)
-```
-
----
-
 ## Levantar y testear una LAN
 
 ### 1) Configuración manual de la interfaz de red
 
-**Datos de la computadora utilizada:** *[Nombre / SO / interfaz]*
+**Datos de la computadora utilizada:** *[Pc de Giovanna Barbero / Linux / Ubuntu]*
 
 | Parámetro | Valor configurado |
 | :--- | :--- |
-| a) Dirección IPv4 | *[ ]* |
-| b) Máscara de subred | *[ ]* |
-| c) Default gateway | *[ ]* |
+| a) Dirección IPv4 | *192.1868.1.110* |
+| b) Máscara de subred | *255.255.0.0* |
+| c) Default gateway | *8.8.8.8* |
 
-![Texto alternativo](./fotos%20parte2/config_ip.png)
+![Texto alternativo](./punto1lan.jpeg)
 
 *Figura 10: Configuración manual de la interfaz de red.*
 
@@ -281,7 +210,7 @@ Se adjunta también el .pcapng de la prueba, titulado `[nombre_archivo].pcapng`.
 
 **b) ¿Existe algún mecanismo de confirmación de recepción equivalente a los ACK de TCP?**
 
-&nbsp;&nbsp;&nbsp;&nbsp; No, en este protocolo (UDP) no se posee ningún mecanismo de confirmación del estilo ACK, el mismo es un protocolo no orientado a la conexión y no confiable, es decir, envia la información sin confirmar que fue recibida o si se produjo algun conflicto en el camino.
+&nbsp;&nbsp;&nbsp;&nbsp;No. UDP es un protocolo sin conexión y no tiene confirmaciones de recepción. En Wireshark se ve que el emisor manda cada datagrama UDP y el receptor no devuelve ningún paquete de confirmación a nivel de transporte. El encabezado UDP tiene solo 4 campos (puerto origen, puerto destino, longitud y checksum), sin número de secuencia ni de confirmación como los de TCP. Por eso el emisor no sabe si el mensaje llegó, se perdió o se duplicó. Si una aplicación necesita esa garantía, la tiene que implementar ella misma en la capa de aplicación.
 
 **c) ¿Qué ocurre si se envían mensajes mientras el receptor UDP no está ejecutándose?**
 
@@ -289,7 +218,8 @@ Si el receptor UDP no está ejecutándose, los mensajes enviados a ese puerto no
 
 **d) ¿UDP garantiza que los mensajes lleguen en el mismo orden en que fueron enviados?**
 
-&nbsp;&nbsp;&nbsp;&nbsp;No, UDP no garantiza que los mensajes lleguen en el mismo orden en que fueron enviados. Cada transmisión se trata de forma independiente, como cada paquete puede seguir una ruta diferente dentro de la red, no existe garantía de que lleguen ordenados, que no se dupliquen o incluso de que lleguen a destino. Además, la cabecera de UDP no incluye números de secuencia para que el receptor pueda reordenarlos.
+&nbsp;&nbsp;&nbsp;&nbsp;No. Cada datagrama UDP es independiente y no lleva número de secuencia, así que el protocolo no puede reordenarlos ni detectar que llegaron en otro orden. Cada datagrama puede seguir un camino distinto por la red y llegar desordenado, duplicado o no llegar. En nuestra prueba, al ser una LAN pequeña con un solo switch, los mensajes probablemente llegaron en orden, pero eso es una consecuencia de la red y no una garantía de UDP. TCP, en cambio, numera los bytes y reordena los segmentos antes de entregarlos a la aplicación.
+
 **e) ¿Qué aplicaciones reales utilizan UDP y por qué?**
 
 &nbsp;&nbsp;&nbsp;&nbsp;*[Respuesta: ejemplos (DNS, VoIP, streaming, juegos online, DHCP, etc.) y justificación.]*
