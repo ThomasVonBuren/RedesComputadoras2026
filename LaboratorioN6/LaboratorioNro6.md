@@ -212,83 +212,9 @@ Si el receptor UDP no está ejecutándose, los mensajes enviados a ese puerto no
 
 **e) ¿Qué aplicaciones reales utilizan UDP y por qué?**
 
-&nbsp;&nbsp;&nbsp;&nbsp;*[Respuesta: ejemplos (DNS, VoIP, streaming, juegos online, DHCP, etc.) y justificación.]*
+&nbsp;&nbsp;&nbsp;&nbsp;UDP se usa en aplicaciones donde importan más la baja latencia y la simplicidad que la entrega garantizada de cada paquete. Como es un protocolo sin conexión, no necesita handshake, no espera confirmaciones y no retransmite, por lo que tiene menos demora y menos sobrecarga que TCP. Por eso lo usan servicios como DNS, donde las consultas son mensajes cortos de pregunta y respuesta y, si no llega respuesta, el cliente simplemente repite la consulta, y DHCP, donde el cliente todavía no tiene dirección IP y no podría establecer una conexión TCP, por lo que pide su configuración con mensajes en broadcast. También lo usan las aplicaciones en tiempo real, como VoIP, videollamadas, streaming en vivo y juegos online, porque en ellas es preferible perder un fragmento de audio, video o un dato de posición que esperar una retransmisión que llegaría tarde y ya no serviría. Por último, protocolos como NTP (sincronización de hora) y QUIC/HTTP/3 también funcionan sobre UDP. QUIC implementa por su cuenta la fiabilidad y el control de congestión en la capa de aplicación, con menos latencia de conexión que TCP. En conclusión, UDP conviene cuando la aplicación tolera pérdidas o resuelve la fiabilidad por sí misma, a diferencia de la transferencia de archivos o la navegación web clásica, que necesitan que todos los datos lleguen completos y en orden y por eso usan TCP.
 
 ---
-
-## Desarrollar un pequeño servidor
-
-### 1) Directorio de archivos e inicio del servidor HTTP
-
-**Archivos del directorio:**
-
-| Archivo | Tipo |
-| :--- | :--- |
-| *[ ]* | TXT |
-| *[ ]* | PDF |
-| *[ ]* | Imagen |
-
-```
-python3 -m http.server 8000
-```
-
-![Texto alternativo](./fotos%20servidor/servidor_inicio.png)
-
-*Figura 18: Servidor HTTP iniciado en la computadora servidora.*
-
-### 2) Acceso desde el navegador
-
-![Texto alternativo](./fotos%20servidor/navegador_listado.png)
-
-*Figura 19: Listado de archivos visto desde el navegador de la segunda computadora.*
-
-![Texto alternativo](./fotos%20servidor/navegador_descarga.png)
-
-*Figura 20: Descarga de un archivo desde el navegador.*
-
-### 3) Transferencia con curl
-
-```
-curl -O http://[IP_servidor]:8000/[archivo]
-```
-
-![Texto alternativo](./fotos%20servidor/curl.png)
-
-*Figura 21: Descarga del archivo con curl.*
-
-### 4) Captura de tráfico con Wireshark
-
-![Texto alternativo](./fotos%20servidor/wireshark_http.png)
-
-*Figura 22: Captura general del tráfico generado (handshake TCP, GET, respuesta, cierre).*
-
-![Texto alternativo](./fotos%20servidor/wireshark_http_detalle.png)
-
-*Figura 23: Detalle de la petición `GET` y la respuesta `200 OK`.*
-
-**¿De qué tipo es el tráfico?**
-
-&nbsp;&nbsp;&nbsp;&nbsp;*[Respuesta: protocolo de aplicación (HTTP), transporte (TCP), puerto utilizado, comparación con el tráfico UDP anterior, y si va en texto plano.]*
-
-| Capa | Protocolo | Observación |
-| :--- | :--- | :--- |
-| Aplicación | HTTP | *[ ]* |
-| Transporte | TCP | *[ ]* |
-| Red | IPv4 | *[ ]* |
-| Enlace | Ethernet II | *[ ]* |
-
----
-
-## Restauración de la configuración de red
-
-&nbsp;&nbsp;&nbsp;&nbsp;*[Confirmar que la interfaz de red volvió a configurarse para obtener dirección de forma automática (DHCP) y que hay acceso a Internet.]*
-
-![Texto alternativo](./fotos%20servidor/dhcp_restaurado.png)
-
-*Figura 24: Interfaz de red restaurada a configuración automática.*
-
----
-
 ## Conclusiones
 
-&nbsp;&nbsp;&nbsp;&nbsp;*[Conclusiones generales del grupo: qué se aprendió de la capa física (cableado, switch), diferencias observadas entre UDP y TCP en la práctica, dificultades encontradas y cómo se resolvieron.]*
+&nbsp;&nbsp;&nbsp;&nbsp;Luego de pasar por este trabajo y experimentar como podemos generar y levantar nuestrar propias conexiones entre computadoras, podemos afirmar que logramos adquirir grandes habilidades que seran muy utiles en el ambito profesional y hasta inclusive personal, nos parecio muy interesante el proceso de crimpear un cable para poder usarlo para las conexiones y sin lugar a duda ahora estamos mas capacitados e interiorizados para trabajar con redes de computadoras.
