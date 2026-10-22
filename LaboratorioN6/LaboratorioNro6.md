@@ -113,14 +113,6 @@ En esta imagen se verifica como el primer cable esta armado de forma correcta, a
 
 El intercambio de cables se realizó con MacacOS. Recibimos el cable construido por el otro para realizar la inspección visual y la prueba eléctrica con tester, según el procedimiento descrito en los incisos 3a y 3b. Ambos cables obtuvieron resultados positivos.
 
-![Detalle del conector del cable intercambiado](./fotos%20parte1/intercambio_1.jpeg)
-
-*Figura 6a: Detalle del conector del cable intercambiado.*
-
-![Vista de la terminación del cable](./fotos%20parte1/intercambio_2.jpeg)
-
-*Figura 6b: Vista de la terminación del cable.*
-
 ---
 
 # PARTE 2: Equipamiento físico, verificación y utilización de equipos de red y generación de tráfico
@@ -160,25 +152,23 @@ Conectamos los cables que armamos a un switch y mandamos el ping a la IP del gru
 
 ### 3) Receptor y emisor UDP con ncat
 
-**Receptor:**
+En la computadora receptora, con dirección IP `192.168.1.110`, se ejecutó el siguiente comando para escuchar datagramas UDP en el puerto `5000`:
 
-```
+```bash
 ncat -u -l 5000
 ```
 
-![Texto alternativo](./fotos%20parte2/ncat_receptor.png)
+Desde el equipo emisor (`192.168.1.10`) se enviaron mensajes a esa dirección y puerto. El comando correspondiente para el envío es:
 
-*Figura 13: Receptor UDP escuchando en el puerto 5000.*
-
-**Emisor:**
-
-```
-ncat -u [IP_receptor] 5000
+```bash
+ncat -u 192.168.1.110 5000
 ```
 
-![Texto alternativo](./fotos%20parte2/ncat_emisor.png)
+En la terminal receptora se visualizaron los mensajes `hola`, `hola2` y `redesdecomp`. Además, Wireshark registró datagramas UDP desde `192.168.1.10` hacia `192.168.1.110`, con puerto destino `5000`, lo que permitió comprobar la comunicación entre ambos equipos. La captura muestra el comando del receptor y los mensajes recibidos; no incluye la terminal del emisor.
 
-*Figura 14: Emisor UDP enviando mensajes.*
+![Recepción de mensajes con ncat y captura de tráfico UDP en Wireshark](./imagenes/ncat_udp.jpeg)
+
+*Figura 13: Mensajes recibidos con ncat y tráfico UDP dirigido al puerto 5000.*
 
 ---
 
