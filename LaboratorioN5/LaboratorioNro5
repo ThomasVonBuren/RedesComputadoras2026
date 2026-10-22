@@ -24,8 +24,7 @@
 
 ---
 
-## 1) Punto
-
+## 1) 
 **a )**
 
 &nbsp;&nbsp;&nbsp;&nbsp;El protocolo de mensajes de control de Internet (ICMP) es un conjunto de reglas de comunicación que los dispositivos utilizan para comunicar errores de transmisión de datos en una red.
@@ -38,14 +37,160 @@ No lo hace de manera directa, pero si trabajan en conjunto, la principal diferen
 Viaja dentro de IP ya que ICMP no transporta datos directos de usuario, se vale de el direccionamiento de IP.
 El receptor lo sabe gracias al campo Protocol (Protocolo) presente en el encabezado del paquete IPv4 (o el campo Next Header en IPv6). Cuando la capa de red del sistema receptor lee la cabecera IP, examina este campo de 8 bits que contiene un número estandarizado para identificar qué protocolo viene encapsulado dentro de la carga útil (payload); al detectar que el número es 1 (o 58 en el caso de IPv6), el sistema reconoce al instante que el contenido no pertenece a protocolos de transporte como TCP o UDP, sino que se trata de un mensaje de control o diagnóstico que debe ser derivado directamente al módulo ICMP para su procesamiento.
 
+
+**c )** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;El ping comprueba que existe una comunicacion entre dos computadoras y mide el tiempo de respuesta. 
+* Echo Request: Mensaje emitido desde el origen para solicitar a otro dispositivo una respuesta que confirme su presencia y alcance.
+* Echo Reply: Es el mensaje de respuesta que se le da al origen luego de una Echo Request, verificando asi su presencia y su alcance.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;El campo que permite diferenciar a el Echo Request y al Echo Reply es el Type de la cabecera del ICMP
+
+
+**d )** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Un mensaje ICMP contiene una cabecera de 64 bits, los cuales se dividen en:  
+* Tipo (8 bits): Especifica el tipo de mensaje ICMP.
+* Código (8 bits): Se usa para especificar parámetros del mensaje que se pueden codificar en uno o unos pocos bits.
+* Suma de comprobación (16 bits): Suma de comprobación del mensaje ICMP entero. Se utiliza el mismo algoritmo de suma de comprobación que en IP.
+* Parámetros (32 bits): Se usa para especificar parámetros más largos.
+
+![Texto alternativo](./fotos%20punto1/f.jpeg)
+
+*Figura 1 : Actividad en el grafico.*
+
+![Texto alternativo](./fotos%20punto1/e.jpeg)
+
+*Figura 2 : Ping al IP del gateway y al IP del Internet.*
+
+![Texto alternativo](./fotos%20punto1/d.jpeg)
+
+*Figura 3 : Deteccion de captura y aplicacion de filtro.*
+
+![Texto alternativo](./fotos%20punto1/a.jpeg)
+
+*Figura 4 : Panel de detalle del Echo Request de `Ethernet II`.*
+
+![Texto alternativo](./fotos%20punto1/b.jpeg)
+
+*Figura 5 : Panel de detalle del Echo Request de `IPv4`.*
+
+![Texto alternativo](./fotos%20punto1/c.jpeg)
+
+*Figura 6 : Panel de detalle del Echo Request de `ICMP` y `Data`.*
+
+Tabla de datos:
+
+| Capa | Dirección/identificador origen | Dirección/identificador destino | ¿Qué campo indica qué protocolo viene "adentro"? |
+| :--- | :--- | :--- | :--- |
+| **Ethernet II** | ASRockIncorp_c3:00:ed (70:85:c2:c3:00:ed) | MS-NLB-PhysServer-16_18:42:4e:04 (02:10:18:42:4e:04) | Type: IPv4 (0x0800) |
+| **Internet Protocol Version 4** | 192.168.0.102 | 192.168.1.1 | Protocol: ICMP (1) |
+| **Internet Control Message Protocol** | No tiene porque ICMP no usa direcciones ni puertos propios  | No tiene porque ICMP no usa direcciones ni puertos propios | ICMP no encapsula un protocolo de capa superior que se indique con un campo. Lo que sigue son los datos, y lo que define su interpretación es el campo Type |
+| **Datos/payload** | N/A | N/A | N/A. Son los datos en si. |
+
+
+
+### Punto a)
+
+**Análisis de la dirección MAC destino y alcance de capa:**
+
+La dirección MAC destino del Echo Request enviado a 8.8.8.8 no es la dirección MAC del servidor de Google. En su lugar, corresponde a la dirección MAC del router local o puerta de enlace (02:10:18:42:4e:04). 
+
+Al comparar esta MAC destino con la trama del ping enviado a la dirección IP del gateway (192.168.1.1), se observa que en ambos casos la dirección de destino de Capa 2 es exactamente la misma (02:10:18:42:4e:04).
+
+* **Dirección MAC (Capa 2 - Enlace de Datos):** Posee un alcance estrictamente local. Las tramas Ethernet están delimitadas a la subred LAN y no pueden atravesar routers, por lo tanto, cualquier tráfico destinado a una red externa se encapsula dirigiendo la trama a la MAC de la puerta de enlace.
+* **Dirección IP (Capa 3 - Red):** Posee un alcance global / extremo a extremo (end-to-end). Permite que la dirección IP de destino (8.8.8.8) se mantenga inalterada a lo largo de todo el trayecto a través de Internet.
+
+### Punto b)
+
+**Comparación entre Echo Request (paquete 39758) y Echo Reply (paquete 39767):**
+
+* **Campos que cambian:**
+  * **Ethernet II:** Se invierten las direcciones MAC de origen y destino.
+  * **IPv4:** Se intercambian las direcciones IP de origen (192.168.0.102) y destino (8.8.8.8), se recalcula el Header Checksum y disminuye el campo TTL.
+  * **ICMP:** Cambia el campo Type (de 8 Request a 0 Reply) y se recalcula el Checksum de ICMP.
+
+* **Campos que se mantienen:**
+  * Se conservan la versión del protocolo (IPv4), la longitud del encabezado (Header Length), el Identifier (id=0x0001), el Sequence Number (1075 ) y la carga útil o Payload (32 bytes).
+
+**Justificación de los campos:**
+
+* **Justificación de los cambios:** Invertir las direcciones en Ethernet e IP es indispensable para que el tráfico de respuesta sea encaminado de regreso al host emisor. El campo "Type" cambia para diferenciar funcionalmente una solicitud de una respuesta, lo que modifica el contenido del encabezado e invalida los checksums previos, obligando a su recalculación.
+* **Permanencia del Identificador y Número de Secuencia:** Permanecen idénticos para que la pila de protocolos del sistema operativo emisor pueda emparejar de forma unívoca cada respuesta recibida con su solicitud correspondiente, lo que permite calcular con precisión el tiempo de ida y vuelta (RTT).
+**Punto c) Análisis del Payload de ping**
+
+El payload del comando ping está dentro del mensaje ICMP, en el campo Data. En la captura se puede ver que ocupa 32 bytes y tiene una secuencia repetitiva de caracteres alfabéticos. Este contenido se mantiene igual en el Echo Reply, porque el receptor debe devolver los mismos datos que recibió en el Echo Request.
+En Windows, ping suele utilizar 32 bytes de datos, mientras que en Linux suelen utilizar 56 bytes, pudiendo incluir marcas de tiempo. Esto demuestra que el protocolo ICMP no establece un contenido ni un tamaño fijo para los datos de prueba, sino que estos dependen de la implementación del sistema operativo.
+
+**Punto d) Análisis del TTL**
+
+En el Echo Request enviado hacia 8.8.8.8 se puede ver un valor de TTL = 128, mientras que el Echo Reply recibido presenta un valor de TTL = 116.
+Esta diferencia se debe que el TTL es un campo del encabezado IPv4, que disminuye en una unidad cada vez que un router reenvía el paquete. Cuando el TTL llega a cero, el paquete se descarta, evitando que circule indefinidamente por la red.
+Es importante aclarar que el Echo Request y el Echo Reply son paquetes diferentes, generados por dispositivos distintos, por lo que pueden tener diferentes valores iniciales de TTL.
+Por eso, no es posible determinar la cantidad exacta de routers atravesados por el Echo Reply simplemente realizando la resta `128 - 116`, ya que se desconoce el TTL inicial utilizado por el servidor de destino.
+
+### Punto e)
+
+```mermaid
+graph TD
+    subgraph Frame["FRAME / TRAMA ETHERNET (74 bytes)"]
+        direction LR
+        
+        Ethernet["ETHERNET II HEADER<br/>(14 bytes)"]
+        
+        subgraph IP["PAQUETE IPv4 (60 bytes)"]
+            direction LR
+            
+            IPHeader["IP HEADER<br/>(20 bytes)"]
+            
+            subgraph ICMP["MENSAJE ICMP (40 bytes)"]
+                direction LR
+                
+                ICMPHeader["ICMP HEADER<br/>(8 bytes)"]
+                Payload["PAYLOAD / DATA<br/>(32 bytes)"]
+            end
+        end
+    end
+
+    style Frame fill:#e2e8f0,stroke:#1e293b,stroke-width:2px,color:#000000
+    style IP fill:#cbd5e1,stroke:#1e293b,stroke-width:2px,color:#000000
+    style ICMP fill:#94a3b8,stroke:#1e293b,stroke-width:2px,color:#000000
+    style Ethernet fill:#475569,color:#ffffff
+    style IPHeader fill:#334155,color:#ffffff
+    style ICMPHeader fill:#1e293b,color:#ffffff
+    style Payload fill:#0f172a,color:#ffffff
+```
+
 ---
 
 ## 2)
+**a )** ¿Qué problema resuelve ARP? ¿En qué capa lo ubicarían y por qué es discutible?
+Se encarga de traducir una dirección IP a la dirección MAC física correspondiente dentro de la misma red local, discuteiendo un poco en que capa lo ubicariamos, llegamos a la conclusion que opera en capa de enlace, pero conceptualmente conecta información de las dos capas
+resuelve algo relacionado a direcciones IP pero el mensaje ARP  viaja directo encapsulado en una trama Ethernet por eso concluimos que entre la 2 y la 3
+
+**b )** ¿Qué es un ARP Request y un ARP Reply? ¿A quién se envía cada uno?
+ARP Request es el mensaje que manda un host preguntando, quien tiene ess IP y vpidiendo la MAC se manda en broadcast, a toda la red, por wue no sabe a quien mandarselo
+mientras que el ARP Reply es la respuesta del dueño de la IP, informando su MAC entonces manda unicast al que pregunto
+
+**c )** ¿Qué es la caché ARP y por qué existe?
+Para no mandar un Request en broadcast cada vez que se quiere comunicar con la misma IP se crea la caché ARP, es como una tabla con las asociaciones IP con MAC
+
+**d )** Traten de responder con sus palabras: "Tengo la IP de una máquina de mi red local. ¿Cómo sé a qué dirección MAC debo enviarle la trama?"
+Me fijo si la tengo en el cahe,si la tengo uso directamente esa MAC, si no la tengo mando un ARP Request en broadcast preguntando quién tiene esa IP y cuando me responda la guardo en la caché y armo la trama con esa MAC de destino
+
+**e )**  Ver la caché ARP de su computadora y buscar la entrada del gateway:
+MAC del arp -a: 3c-6a-d2-e8-25-58
+MAC destino en el Echo Request capturado con Wireshark: TPLink_e8:25:58 (3c:6a:d2:e8:25:58)
+Estan las capturas en la carpeta RedesComputadoras2026\LaboratorioN5\Capturas Punto 2e)
+y concluimos que la MAC asociada al gateway en la caché ARP coincide con la MAC destino de la trama Ethernet, porque es la misma dirección que la compu tenía guardada
+( aca en este punto e) la captura del punto 1 la subio, otro integrante del grupo, por eso no es comparable directamente con la caché ARP de esta computadora, para demostrar la captura del ping al gateway en la misma red donde verficamos
+ la caché ARP (192.168.68.0/24), confirmando que la MAC asociada al gateway (3c:6a:d2:e8:25:58) coincide con la MAC destino observada en la trama Ethernet )
 **f )** Se generó tráfico ARP utilizando la opción A) proporcionada en la consigna.
 
 ![Tráfico ARP](./TraficoARP.png)
 
-*Figura 1: Tráfico ARP utilizando la opción A).*
+*Figura 7: Tráfico ARP utilizando la opción A).*
 
 Se adjunta también el .pca de la prueba. Titulado `tp5arp.pcapng`
 
@@ -105,59 +250,59 @@ Preguntas:
 
 ![Texto alternativo](./Punto4a.png)
 
-*Figura n: Terminal A UDP : Servidor.*
+*Figura 8: Terminal A UDP : Servidor.*
 
 ![Texto alternativo](./Punto4b.png)
 
-*Figura n: Terminal B : Cliente.*
+*Figura 9: Terminal B : Cliente.*
 
 ![Texto alternativo](./Punto4c.png)
 
-*Figura n: Handshake SYN.*
+*Figura 10: Handshake SYN.*
 
 ![Texto alternativo](./Punto4d.png)
 
-*Figura n: Handshake SYN, ACK.*
+*Figura 11: Handshake SYN, ACK.*
 
 ![Texto alternativo](./Punto4e.png)
 
-*Figura n: Handshake ACK.*
+*Figura 12: Handshake ACK.*
 
 ![Texto alternativo](./Punto4f.png)
 
-*Figura n: Paquete envio desde Terminal B.*
+*Figura 13: Paquete envio desde Terminal B.*
 
 ![Texto alternativo](./Punto4g.png)
 
-*Figura n: Paquete recepción a Terminal A.*
+*Figura 14: Paquete recepción a Terminal A.*
 
 ![Texto alternativo](./Punto4h.png)
 
-*Figura n: Paquete envio desde Terminal A.*
+*Figura 15: Paquete envio desde Terminal A.*
 
 ![Texto alternativo](./Punto4i.png)
 
-*Figura n: Paquete recepción a Terminal B.*
+*Figura 16: Paquete recepción a Terminal B.*
 
 ![Texto alternativo](./Punto4j.png)
 
-*Figura n: Paquete de finalización de sesión.*
+*Figura 17: Paquete de finalización de sesión.*
 
 ![Texto alternativo](./Punto4k.png)
 
-*Figura n: Paquete UDP envio B -> A.*
+*Figura 18: Paquete UDP envio B -> A.*
 
 ![Texto alternativo](./Punto4n.png)
 
-*Figura n: Paquete UDP envio A -> B.*
+*Figura 19: Paquete UDP envio A -> B.*
 
 ![Texto alternativo](./Punto4l.png)
 
-*Figura n: Terminal A UDP : Servidor.*
+*Figura 20: Terminal A UDP : Servidor.*
 
 ![Texto alternativo](./Punto4m.png)
 
-*Figura n: Terminal B UDP : Cliente.*
+*Figura 21: Terminal B UDP : Cliente.*
 
 **a )**
 
@@ -182,3 +327,31 @@ Preguntas:
 **f )**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Al conectarnos a un servidor que no esta corriendo, con UDP la consola queda conectada y no figura nada en Wireshark, por lo que el cliente no sabe que el servidor no esta escuchando y nunca tendrá respuesta; al enviar un mensaje el mismo sistema operativo le indica que no existe la dirección como falla, y ahí cierra forzadamente. En TCP, se generan 5 requests para intentar conectarse y se cierra solo luego de no recibir respuesta. Se ve el uso del paquete RST al ser una desconexión abrupta. En UDP se requiere el uso de la capa de red, mientras que TCP puede resolverlo por si mismo en la capa de transporte.
+
+---
+
+&nbsp;&nbsp;&nbsp;&nbsp;Realizamos ahora las instrucciónes propuestas con los script cargados en el archivo para completar la siguiente tabla:
+
+![Texto alternativo](./Punto4o.png)
+
+*Figura 22: Terminal A : Inicialización servidor.*
+
+![Texto alternativo](./Punto4p.png)
+
+*Figura 23: Terminal B : Enviar mensaje cliente.*
+
+![Texto alternativo](./Punto4q.png)
+
+*Figura 24: Wireshark : Todos los paquetes generados. Notar el Handshake SYN;ACK, el Push PSH, y el Cierre FIN*
+
+| Llamada a la API | ¿Dónde se ejecuta? | ¿Genera tráfico en la red? | Segmentos observados en Wireshark (Flags y descripción) |
+| :--- | :--- | :--- | :--- |
+| **`socket()`** | Ambos | No | Operación puramente local que reserva descriptores y recursos en la pila de red del SO. No se ve en WS. |
+| **`bind()`** | Servidor | No | Registra localmente en el SO la dirección IP y el puerto asociados al socket, por lo que no se ve en WS. |
+| **`listen()`** | Servidor | No | Ninguno ya que modifica el estado del socket a LISTEN para aceptar paquetes `SYN` entrantes. |
+| **`connect()`** | Cliente | Sí | Three-Way Handshake:<br>1. `[SYN]` Cliente -> Servidor<br>2. `[SYN, ACK]` Servidor -> Cliente<br>3. `[ACK]` Cliente -> Servidor |
+| **`accept()`** | Servidor | No | Retorna un nuevo socket extrayendo la conexión ya establecida previa por el SO tras el handshake, por lo que no se ve. |
+| **`sendall()`** | Ambos | Sí | Segmento con datos: `[PSH, ACK]` con el contenido del mensaje. |
+| **`recv()`** | Ambos | Sí| Lee datos del buffer local. La recepción activa la devolución automática de una confirmación `[ACK]`. |
+| **`close()`** | Ambos | Sí | Cierre TCP :<br>1. `[FIN, ACK]` enviado por quien inicia el cierre<br>2. `[ACK]` de confirmación del otro extremo<br>3. `[FIN, ACK]` del otro extremo<br>4. `[ACK]` de confirmación final |
+
