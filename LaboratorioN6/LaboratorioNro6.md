@@ -132,14 +132,15 @@ En esta imagen se verifica como el primer cable esta armado de forma correcta, a
 
 ## 4) Documentación del intercambio de cables
 
-| Cable verificado | Grupo que lo construyó | Grupo que lo verificó | Resultado visual | Resultado eléctrico |
-| :--- | :--- | :--- | :--- | :--- |
-| *[Nuestro cable]* | Nuestro grupo | *[Grupo X]* | *[ ]* | *[ ]* |
-| *[Cable del grupo X]* | *[Grupo X]* | Nuestro grupo | *[ ]* | *[ ]* |
+El intercambio de cables se realizó con MacacOS. Recibimos el cable construido por el otro para realizar la inspección visual y la prueba eléctrica con tester, según el procedimiento descrito en los incisos 3a y 3b. Ambos cables obtuvieron resultados positivos.
 
-![Texto alternativo](./fotos%20parte1/intercambio.jpeg)
+![Detalle del conector del cable intercambiado](./fotos%20parte1/intercambio_1.jpeg)
 
-*Figura 6: Evidencia del proceso técnico de verificación con el otro grupo.*
+*Figura 6a: Detalle del conector del cable intercambiado.*
+
+![Vista de la terminación del cable](./fotos%20parte1/intercambio_2.jpeg)
+
+*Figura 6b: Vista de la terminación del cable.*
 
 ---
 
@@ -213,7 +214,8 @@ En esta imagen se verifica como el primer cable esta armado de forma correcta, a
 
 **d) Justificación de las direcciones elegidas:**
 
-&nbsp;&nbsp;&nbsp;&nbsp;*[¿Por qué elegimos esas direcciones? ¿Pertenecen a un rango privado? ¿Están en la misma subred que las PCs de los otros grupos? ¿Tenía sentido configurar un gateway si no había router en la LAN? ¿Tenían o no sentido para la actividad?]*
+Se utilizó la dirección privada 192.168.1.110 con máscara 255.255.0.0 (/16). Esta configuración ubica al equipo en la misma subred que 192.168.1.10, permitiendo la comunicación local mediante el switch.
+No era necesario configurar un gateway porque no se necesitaba acceder a otras redes. El valor 8.8.8.8 que aparece en una captura corresponde a un servidor DNS público y no era adecuado como puerta de enlace.
 
 ---
 
@@ -283,11 +285,7 @@ Se adjunta también el .pcapng de la prueba, titulado `[nombre_archivo].pcapng`.
 
 **c) ¿Qué ocurre si se envían mensajes mientras el receptor UDP no está ejecutándose?**
 
-&nbsp;&nbsp;&nbsp;&nbsp;*[Respuesta. Indicar si apareció ICMP "Port unreachable" en Wireshark y adjuntar captura.]*
-
-![Texto alternativo](./fotos%20parte2/udp_sin_receptor.png)
-
-*Figura 17: Envío de mensajes UDP sin receptor activo.*
+Si el receptor UDP no está ejecutándose, los mensajes enviados a ese puerto no quedan en espera para cuando se inicie: se descartan. El equipo destino puede responder con un mensaje ICMP “Port Unreachable”, aunque esto depende de su configuración y del firewall. UDP no garantiza la entrega ni retransmite los mensajes perdidos.
 
 **d) ¿UDP garantiza que los mensajes lleguen en el mismo orden en que fueron enviados?**
 
