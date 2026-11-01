@@ -81,4 +81,28 @@ dIeZ
 
 `paridad.py` calcula las paridades pero no las compara con el `CHECK` recibido, esa comparación la hicimos aparte pto 4
 ## Reflexiones e investigación
+* 1) ¿Qué hubiera pasado si el mensaje tenía errores en dos bits de filas y columnas distintas? ¿Y si se dañaba un bit
+de los de control?
+    
+    Si se dañaban dos columnas y filas distintas el sistema bidimensional de bits de paridad no podria detectar la falla correctamente, entonces el error no se corregiria. Si falla un bit de control check, se detecta, ya que las paridades de las filas y columnas darian correctamente y cerrarian, por lo tanto se podria detectar, cambiarlo y no afectaria el problema.
 
+* 2) Si el mensaje es texto en castellano, muchas veces un error "se adivina" por contexto (Hola mondo). ¿Sirve eso
+para una contraseña, un número de cuenta o una dirección web? ¿Qué aporta el código frente a "leer y adivinar"?
+
+No, esto no funcionaria para una contraseña o numero de cuenta, ya que por lo general las contraseñas seguras no dependen de reglas gramaticales y el adivinar por contexto suele ser muy pobre para adivinar por aleatoriedad, por ejemplo las URL no siguen reglas gramaticales y suelen ser caracteres elegidos al azar, igual que los numero de una cuenta bancaria. El codigo aporta una mayor exactitud para cualquier tipo de caracter sistema, sin importar si es aleatorio o depende del contexto, nos permite estar 100% seguros y favorece la deteccion de errores y orreccion de los mismos.
+
+* 3) ¿Confirmaron que la corrección es correcta? 
+
+Solo en parte. Confirmamos que es consistente: cierran todas las paridades y el texto tiene sentido. Pero eso no prueba que sea la única corrección válida, las otras 23 combinaciones también cerraban la paridad igual de bien. La elegimos por el contenido, no porque la matemática la señalara como la única opción.
+
+* 4) Hamming (7,4)
+
+Hamming(7,4) agrega 3 bits de paridad (p1, p2, p3) a cada 4 bits de datos, armando palabras de 7 bits: p1 p2 d1 p3 d2 d3 d4.
+
+p1 = d1 xor d2 xor d4 (posiciones 1,3,5,7)
+p2 = d1 xor d3 xor d4 (posiciones 2,3,6,7)
+p3 = d2 xor d3 xor d4 (posiciones 4,5,6,7)
+
+Al decodificar se recalculan 3 bits de chequeo y el número que forman en binario da directo la posición (1 a 7) del bit con error, sin cruzar filas con columnas. Por eso es superior a lo que usamos en el TP: con paridad 2D, más de un error deja todo ambiguo; con Hamming cada palabra de 7 bits se corrige sola, sin ambigüedad y sin adivinar por contexto. La desventaja es el overhead: 3 bits de control cada 4 de datos (75%), contra el ~29% de nuestro esquema, se gana certeza pero se pierde eficiencia.
+
+Aplicamos Hamming(7,4) a los 112 bits ya corregidos (scripts/hamming74.py), armando un paquete de 196 bits (data/paquete_hamming.bits). Probamos corrompiendo a propósito un bit y el decodificador lo detectó y corrigió solo, calculando el síndrome.
