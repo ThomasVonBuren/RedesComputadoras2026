@@ -84,12 +84,14 @@ dIeZ
 * 1) ¿Qué hubiera pasado si el mensaje tenía errores en dos bits de filas y columnas distintas? ¿Y si se dañaba un bit
 de los de control?
     
-    Si se dañaban dos columnas y filas distintas el sistema bidimensional de bits de paridad no podria detectar la falla correctamente, entonces el error no se corregiria. Si falla un bit de control check, se detecta, ya que las paridades de las filas y columnas darian correctamente y cerrarian, por lo tanto se podria detectar, cambiarlo y no afectaria el problema.
+   Si se alteran dos bits en filas y columnas distintas, la paridad bidimensional detecta el problema porque fallan las paridades de dos filas y dos columnas. Sin embargo, no permite identificar de manera única los bits afectados, ya que existen dos emparejamientos posibles entre esas filas y columnas.
+   Si se altera únicamente un bit de CHECK, aparece una discrepancia en la verificación correspondiente. Bajo la hipótesis de un único error en todo el bloque, una discrepancia aislada permite identificar el bit de control dañado; un error en los datos produciría una discrepancia de fila y otra de columna.
 
-* 2) Si el mensaje es texto en castellano, muchas veces un error "se adivina" por contexto (Hola mondo). ¿Sirve eso
-para una contraseña, un número de cuenta o una dirección web? ¿Qué aporta el código frente a "leer y adivinar"?
+* 2) Si el mensaje es texto en castellano, muchas veces un error "se adivina" por contexto(Hola mondo). ¿Sirve eso para una contraseña, un número de cuenta o una dirección web? ¿Qué aporta el código frente a "leer y adivinar"?
 
-No, esto no funcionaria para una contraseña o numero de cuenta, ya que por lo general las contraseñas seguras no dependen de reglas gramaticales y el adivinar por contexto suele ser muy pobre para adivinar por aleatoriedad, por ejemplo las URL no siguen reglas gramaticales y suelen ser caracteres elegidos al azar, igual que los numero de una cuenta bancaria. El codigo aporta una mayor exactitud para cualquier tipo de caracter sistema, sin importar si es aleatorio o depende del contexto, nos permite estar 100% seguros y favorece la deteccion de errores y orreccion de los mismos.
+    El contexto puede ayudar a interpretar una palabra, pero no permite recuperar de forma confiable una contraseña, un número de cuenta o una dirección web: un carácter diferente podría dar lugar a otro valor válido.
+
+    El código aporta una verificación matemática independiente del significado del mensaje. Permite detectar o corregir errores dentro de sus capacidades, pero no garantiza una recuperación perfecta ante cualquier patrón de alteraciones.
 
 * 3) ¿Confirmaron que la corrección es correcta? 
 
@@ -97,12 +99,16 @@ Solo en parte. Confirmamos que es consistente: cierran todas las paridades y el 
 
 * 4) Hamming (7,4)
 
-Hamming(7,4) agrega 3 bits de paridad (p1, p2, p3) a cada 4 bits de datos, armando palabras de 7 bits: p1 p2 d1 p3 d2 d3 d4.
+Hamming (7,4) agrega tres bits de paridad a cada cuatro bits de datos y forma palabras de siete bits con la distribución p1 p2 d1 p3 d2 d3 d4. Para paridad par:
 
-p1 = d1 xor d2 xor d4 (posiciones 1,3,5,7)
-p2 = d1 xor d3 xor d4 (posiciones 2,3,6,7)
-p3 = d2 xor d3 xor d4 (posiciones 4,5,6,7)
+- p1 = d1 XOR d2 XOR d4, verificando las posiciones 1, 3, 5 y 7.
+- p2 = d1 XOR d3 XOR d4, verificando las posiciones 2, 3, 6 y 7.
+- p3 = d2 XOR d3 XOR d4, verificando las posiciones 4, 5, 6 y 7.
 
-Al decodificar se recalculan 3 bits de chequeo y el número que forman en binario da directo la posición (1 a 7) del bit con error, sin cruzar filas con columnas. Por eso es superior a lo que usamos en el TP: con paridad 2D, más de un error deja todo ambiguo; con Hamming cada palabra de 7 bits se corrige sola, sin ambigüedad y sin adivinar por contexto. La desventaja es el overhead: 3 bits de control cada 4 de datos (75%), contra el ~29% de nuestro esquema, se gana certeza pero se pierde eficiencia.
+Al recibir una palabra se calculan los chequeos s1, s2 y s3. El síndrome, interpretado como el número binario s3 s2 s1, indica la posición del bit alterado cuando ocurrió un único error. Si vale cero, no se detectan errores.
 
-Aplicamos Hamming(7,4) a los 112 bits ya corregidos (scripts/hamming74.py), armando un paquete de 196 bits (data/paquete_hamming.bits). Probamos corrompiendo a propósito un bit y el decodificador lo detectó y corrigió solo, calculando el síndrome.
+Hamming (7,4) garantiza corregir un error por palabra de siete bits. Si se alteran varios bits dentro de una misma palabra, puede producir una corrección incorrecta. Por eso, su ventaja depende del patrón de errores y no implica que sea superior en todos los casos a la paridad bidimensional.
+
+Agrega tres bits de control por cada cuatro de datos, un 75 % respecto de los datos originales, frente al aproximadamente 29 % de nuestro esquema.
+
+Aplicamos Hamming (7,4) a los 112 bits corregidos mediante scripts/hamming74.py, generando un paquete de 196 bits en data/paquete_hamming.bits. En la prueba realizada, alteramos un bit y el decodificador lo detectó y corrigió mediante el síndrome.
